@@ -43,7 +43,7 @@ public class MainMenu : MonoBehaviour
             errorWizardClericText.enabled = false;
         }
         
-        if (int.Parse(enemyInput.text) > 10)
+        if (int.Parse(enemyInput.text) > 10 || int.Parse(enemyInput.text) < 1)
         {
             errorEnemyText.enabled = true;
         }

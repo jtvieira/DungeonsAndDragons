@@ -39,16 +39,25 @@ public class GameControllerScript : MonoBehaviour
 				if (Vector3.Distance(tiles[i].transform.position, tiles[j].transform.position) > maxDistance)
 				{
 					maxDistance = Vector3.Distance(tiles[i].transform.position, tiles[j].transform.position);
-					allySpawn = tiles[i];
-					enemySpawn = tiles[j];
+					this.allySpawn = tiles[i];
+					this.enemySpawn = tiles[j];
 				}
 			}
 		}
 
+		// Vector3 spawnPosition = new Vector3(4, 1, 3); // Replace with your own method for calculating the spawn position
+		// GameObject wizard = Resources.Load<GameObject>("Wizard"); // Replace with the path to your ally prefab
+		// GameObject allyObject = Instantiate(wizard, spawnPosition, Quaternion.identity); // Spawn the prefab at the spawn position and parent it to the tile grid
+	}
+
+	public void spawnAllies()
+	{
 		
-		Vector3 spawnPosition = new Vector3(4, 1, 3); // Replace with your own method for calculating the spawn position
-		GameObject wizard = Resources.Load<GameObject>("Wizard"); // Replace with the path to your ally prefab
-		GameObject allyObject = Instantiate(wizard, spawnPosition, Quaternion.identity); // Spawn the prefab at the spawn position and parent it to the tile grid
+	}
+
+	public void spawnEnemies()
+	{
+
 	}
 
 	// Update is called once per frame

@@ -62,6 +62,11 @@ public class MainMenu : MonoBehaviour
 			this.numSkeletons = numEnemies / 2;
 			this.numWarSkeletons = numEnemies - numSkeletons;
 
+			PlayerPrefs.SetInt("numWizards", numWizards);
+			PlayerPrefs.SetInt("numClerics", numClerics);
+			PlayerPrefs.SetInt("numSkeletons", numSkeletons);
+			PlayerPrefs.SetInt("numWarSkeletons", numWarSkeletons);
+
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 		}
 	}

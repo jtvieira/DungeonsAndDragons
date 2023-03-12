@@ -24,7 +24,10 @@ public class GameControllerScript : MonoBehaviour
 				}
 			}
 		}
+	}
 
+	private void spawnEntities()
+	{
 		float maxDistance = 0;
 
 		for (int i = 0; i < tiles.Length; i++)
@@ -40,7 +43,8 @@ public class GameControllerScript : MonoBehaviour
 			}
 		}
 
-		print(maxDistance + " - " + allySpawn + " - " + enemySpawn);
+		// print(PlayerPrefs.GetInt("numSkeletons"));
+
 	}
 
 	// Update is called once per frame

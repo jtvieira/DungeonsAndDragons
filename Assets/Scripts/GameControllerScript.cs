@@ -42,9 +42,10 @@ public class GameControllerScript : MonoBehaviour
 				}
 			}
 		}
-
+		Vector3 spawnPosition = new Vector3(0, 0, 0); // Replace with your own method for calculating the spawn position
+		GameObject wizard = Resources.Load<GameObject>("Wizard"); // Replace with the path to your ally prefab
+		GameObject allyObject = Instantiate(wizard, spawnPosition, Quaternion.identity); // Spawn the prefab at the spawn position and parent it to the tile grid
 		// print(PlayerPrefs.GetInt("numSkeletons"));
-
 	}
 
 	// Update is called once per frame

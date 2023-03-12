@@ -6,11 +6,12 @@ public class GameControllerScript : MonoBehaviour
 {
 	Tilescript[] tiles;
 
-	public Tilescript start, end;
+	public Tilescript start, end, allySpawn, enemySpawn;
 
 	// Start is called before the first frame update
 	void Start()
 	{
+		// This loop builds the neighboring tiles for each tile
 		tiles = FindObjectsOfType<Tilescript>();
 		for (int i = 0; i < tiles.Length; i++)
 		{
@@ -23,6 +24,23 @@ public class GameControllerScript : MonoBehaviour
 				}
 			}
 		}
+
+		float maxDistance = 0;
+
+		for (int i = 0; i < tiles.Length; i++)
+		{
+			for (int j = i + 1; j < tiles.Length; j++)
+			{
+				if (Vector3.Distance(tiles[i].transform.position, tiles[j].transform.position) > maxDistance)
+				{
+					maxDistance = Vector3.Distance(tiles[i].transform.position, tiles[j].transform.position);
+					allySpawn = tiles[i];
+					enemySpawn = tiles[j];
+				}
+			}
+		}
+
+		print(maxDistance + " - " + allySpawn + " - " + enemySpawn);
 	}
 
 	// Update is called once per frame

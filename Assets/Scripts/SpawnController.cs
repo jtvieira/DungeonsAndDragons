@@ -12,7 +12,7 @@ public class SpawnController : MonoBehaviour
 	private int numSkeletons;
 	private int numWarSkeletons;
 
-	private Dictionary<GameObject, Wizard> wizardDict;
+	private Dictionary<string, Wizard> wizardDict;
 
 	public void initialize(Tilescript[] tiles)
 	{
@@ -23,7 +23,7 @@ public class SpawnController : MonoBehaviour
 		this.numSkeletons = PlayerPrefs.GetInt("numSkeletons");
 		this.numWarSkeletons = PlayerPrefs.GetInt("numWarSkeletons");
 
-		wizardDict = new Dictionary<GameObject, Wizard>();
+		wizardDict = new Dictionary<string, Wizard>();
 	}
 
 	public void spawnEntities()
@@ -60,40 +60,24 @@ public class SpawnController : MonoBehaviour
 			GameObject wizardObject = Resources.Load<GameObject>("Wizard");
             GameObject instantiatedObject = Instantiate(wizardObject, spawnPosition, Quaternion.identity);
             Wizard wizard = instantiatedObject.GetComponent<Wizard>();
-            wizard.initialize("wizard " + i, 100f);
+            wizard.initialize("wizard " + i, instantiatedObject, 100f);
 
-			wizardDict.Add(instantiatedObject, wizard);
+			wizardDict.Add("wizard" + i, wizard);
 
 			tileToSpawn.hasEntity = true;
 			tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
 		}
+
+		// NOTE!!! When spawning in Clerics, we want the initial spawn to be the last tileToSpawn in
+		//   this method... this will act as the "allySpawn" later...
+
+		// spawnClerics(tileToSpawn)
 	}
 
-	public Dictionary<GameObject, Wizard> getWizards()
+	public Dictionary<string, Wizard> getWizards()
 	{
 		return wizardDict;
 	}
-
-	// private void spawnAllies()
-	// {
-	// 	// ==== TEMP CODE ====
-	// 	int numWizards = PlayerPrefs.GetInt("numWizards");
-
-	// 	Tilescript tileToSpawn = allySpawn;
-	// 	tileToSpawn.hasEntity = true;
-	// 	Vector3 spawnPosition;
-
-	// 	for (int i = 0; i < numWizards; i++)
-	// 	{
-	// 		spawnPosition = tileToSpawn.transform.position;
-	// 		spawnPosition.y += 1;
-	// 		GameObject wizard = Resources.Load<GameObject>("Wizard"); // Replace with the path to your ally prefab
-	// 		GameObject allyObject = Instantiate(wizard, spawnPosition, Quaternion.identity); // Spawn the prefab at the spawn position and parent it to the tile grid
-
-	// 		tileToSpawn.hasEntity = true;
-	// 		tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
-	// 	}
-	// }
 
 	public void spawnEnemies()
 	{

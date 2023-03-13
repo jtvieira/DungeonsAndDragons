@@ -31,17 +31,25 @@ public class GameControllerScript : MonoBehaviour
 		// Note: Was getting an error that I could not initialize an object using 'new' if the obj was monobehavior
 		// spawnController = new SpawnController(tiles);
 		// spawnController.spawnEntities();
+
 		GameObject spawnControllerObject = new GameObject("SpawnController");
 		SpawnController spawnController = spawnControllerObject.AddComponent<SpawnController>();
 		spawnController.initialize(tiles);
 
 		spawnController.spawnEntities();
 
-		Dictionary<GameObject, Wizard> wizards = spawnController.getWizards();
-		Transform wizard0 = wizards.ElementAt(0).Key.transform;
-		wizard0.position = new Vector3(5,1,3);
-	}
+		// === TEST CODE ===
+		// This code demonstrates the simple nature of the dictionary!
 
+		Dictionary<string, Wizard> wizards = spawnController.getWizards();
+
+		Wizard test = wizards["wizard0"];
+		GameObject temp = test.getWizardGameObject();
+		// temp.transform.position = new Vector3(5,1,3);
+		// Renderer renderer = temp.GetComponent<Renderer>(); // Get the Renderer component of the game object
+		// Material material = renderer.material; // Get the Material component of the Renderer
+		// material.color = Color.red;
+	}
 
 	// Update is called once per frame
 	void Update()

@@ -77,7 +77,7 @@ public class SpawnController : MonoBehaviour
 	public Dictionary<string, Wizard> getWizards()
 	{
 		return wizardDict;
-	}
+	} 
 
 	public void spawnEnemies()
 	{

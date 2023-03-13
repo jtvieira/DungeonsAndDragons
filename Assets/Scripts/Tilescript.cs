@@ -13,6 +13,8 @@ public class Tilescript : MonoBehaviour
 	public Tilescript backPointer;
 	public bool hasVisited;
 
+	public bool hasEntity;
+
 	public GameObject[] borders;
 
 	public List<Tilescript> getNeighbors()

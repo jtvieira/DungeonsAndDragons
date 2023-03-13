@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameControllerScript : MonoBehaviour
@@ -33,6 +34,12 @@ public class GameControllerScript : MonoBehaviour
 		GameObject spawnControllerObject = new GameObject("SpawnController");
 		SpawnController spawnController = spawnControllerObject.AddComponent<SpawnController>();
 		spawnController.initialize(tiles);
+
+		spawnController.spawnEntities();
+
+		Dictionary<GameObject, Wizard> wizards = spawnController.getWizards();
+		Transform wizard0 = wizards.ElementAt(0).Key.transform;
+		wizard0.position = new Vector3(5,1,3);
 	}
 
 

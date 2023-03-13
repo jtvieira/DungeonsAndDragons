@@ -10,10 +10,12 @@ public class Wizard : Character
 		this.hp = hp;
 	}
 
+	public string getId()
+	{
+		return this.id;
+	}
 	public void setPosition(Vector3 position)
 	{
 		this.position = position;
-	}
-
-	
+	}	
 }

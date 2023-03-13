@@ -12,7 +12,7 @@ public class SpawnController : MonoBehaviour
 	private int numSkeletons;
 	private int numWarSkeletons;
 
-	private List<GameObject> wizards;
+	private Dictionary<GameObject, Wizard> wizardDict;
 
 	public void initialize(Tilescript[] tiles)
 	{
@@ -23,10 +23,7 @@ public class SpawnController : MonoBehaviour
 		this.numSkeletons = PlayerPrefs.GetInt("numSkeletons");
 		this.numWarSkeletons = PlayerPrefs.GetInt("numWarSkeletons");
 
-		for (int i = 0; i < numWizards; i++)
-		{
-			wizards.Add(Resources.Load<GameObject>("Wizard"));
-		}
+		wizardDict = new Dictionary<GameObject, Wizard>();
 	}
 
 	public void spawnEntities()
@@ -46,14 +43,11 @@ public class SpawnController : MonoBehaviour
 			}
 		}
 
-		spawnAllies();
+		spawnWizards();
 	}
 
-	private void spawnAllies()
+	private void spawnWizards()
 	{
-		// ==== TEMP CODE ====
-		int numWizards = PlayerPrefs.GetInt("numWizards");
-
 		Tilescript tileToSpawn = allySpawn;
 		tileToSpawn.hasEntity = true;
 		Vector3 spawnPosition;
@@ -62,13 +56,44 @@ public class SpawnController : MonoBehaviour
 		{
 			spawnPosition = tileToSpawn.transform.position;
 			spawnPosition.y += 1;
-			GameObject wizard = Resources.Load<GameObject>("Wizard"); // Replace with the path to your ally prefab
-			GameObject allyObject = Instantiate(wizard, spawnPosition, Quaternion.identity); // Spawn the prefab at the spawn position and parent it to the tile grid
+
+			GameObject wizardObject = Resources.Load<GameObject>("Wizard");
+            GameObject instantiatedObject = Instantiate(wizardObject, spawnPosition, Quaternion.identity);
+            Wizard wizard = instantiatedObject.GetComponent<Wizard>();
+            wizard.initialize("wizard " + i, 100f);
+
+			wizardDict.Add(instantiatedObject, wizard);
 
 			tileToSpawn.hasEntity = true;
 			tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
 		}
 	}
+
+	public Dictionary<GameObject, Wizard> getWizards()
+	{
+		return wizardDict;
+	}
+
+	// private void spawnAllies()
+	// {
+	// 	// ==== TEMP CODE ====
+	// 	int numWizards = PlayerPrefs.GetInt("numWizards");
+
+	// 	Tilescript tileToSpawn = allySpawn;
+	// 	tileToSpawn.hasEntity = true;
+	// 	Vector3 spawnPosition;
+
+	// 	for (int i = 0; i < numWizards; i++)
+	// 	{
+	// 		spawnPosition = tileToSpawn.transform.position;
+	// 		spawnPosition.y += 1;
+	// 		GameObject wizard = Resources.Load<GameObject>("Wizard"); // Replace with the path to your ally prefab
+	// 		GameObject allyObject = Instantiate(wizard, spawnPosition, Quaternion.identity); // Spawn the prefab at the spawn position and parent it to the tile grid
+
+	// 		tileToSpawn.hasEntity = true;
+	// 		tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
+	// 	}
+	// }
 
 	public void spawnEnemies()
 	{

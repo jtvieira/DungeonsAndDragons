@@ -14,9 +14,18 @@ public class SpawnController : MonoBehaviour
 
 	private List<GameObject> wizards;
 
-	public SpawnController(Tilescript[] tiles)
+	public void initialize(Tilescript[] tiles)
 	{
 		this.tiles = tiles;
+		this.numWizards = PlayerPrefs.GetInt("numWizards");
+		this.numClerics = PlayerPrefs.GetInt("numClerics");
+		this.numSkeletons = PlayerPrefs.GetInt("numSkeletons");
+		this.numWarSkeletons = PlayerPrefs.GetInt("numWarSkeletons");
+
+		print(this.numWizards);
+		print(this.numClerics);
+		print(this.numSkeletons);
+		print(this.numWarSkeletons);
 	}
 
 	public void spawnEntities()

@@ -27,8 +27,12 @@ public class GameControllerScript : MonoBehaviour
 			}
 		}
 
-		spawnController = new SpawnController(tiles);
-		spawnController.spawnEntities();
+		// Note: Was getting an error that I could not initialize an object using 'new' if the obj was monobehavior
+		// spawnController = new SpawnController(tiles);
+		// spawnController.spawnEntities();
+		GameObject spawnControllerObject = new GameObject("SpawnController");
+		SpawnController spawnController = spawnControllerObject.AddComponent<SpawnController>();
+		spawnController.initialize(tiles);
 	}
 
 

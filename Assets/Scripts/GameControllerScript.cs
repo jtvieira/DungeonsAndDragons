@@ -53,7 +53,7 @@ public class GameControllerScript : MonoBehaviour
 
 	public void spawnAllies()
 	{
-		// ==== TEMP CODE ====
+		// ==== TEMP CODE ==== 
 		int numWizards = PlayerPrefs.GetInt("numWizards");
 
 		Tilescript tileToSpawn = allySpawn;

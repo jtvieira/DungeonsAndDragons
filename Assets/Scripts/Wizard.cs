@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Wizard : Character
 {
-	public Wizard(string id, float hp)
+	public void initialize(string id, float hp)
 	{
 		this.id = id;
 		this.hp = hp;
@@ -14,4 +14,6 @@ public class Wizard : Character
 	{
 		this.position = position;
 	}
+
+	
 }

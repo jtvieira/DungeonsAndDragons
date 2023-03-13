@@ -17,15 +17,16 @@ public class SpawnController : MonoBehaviour
 	public void initialize(Tilescript[] tiles)
 	{
 		this.tiles = tiles;
+
 		this.numWizards = PlayerPrefs.GetInt("numWizards");
 		this.numClerics = PlayerPrefs.GetInt("numClerics");
 		this.numSkeletons = PlayerPrefs.GetInt("numSkeletons");
 		this.numWarSkeletons = PlayerPrefs.GetInt("numWarSkeletons");
 
-		print(this.numWizards);
-		print(this.numClerics);
-		print(this.numSkeletons);
-		print(this.numWarSkeletons);
+		for (int i = 0; i < numWizards; i++)
+		{
+			wizards.Add(Resources.Load<GameObject>("Wizard"));
+		}
 	}
 
 	public void spawnEntities()
@@ -44,7 +45,6 @@ public class SpawnController : MonoBehaviour
 				}
 			}
 		}
-
 
 		spawnAllies();
 	}

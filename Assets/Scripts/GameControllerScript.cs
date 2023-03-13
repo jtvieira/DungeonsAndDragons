@@ -6,7 +6,9 @@ public class GameControllerScript : MonoBehaviour
 {
 	Tilescript[] tiles;
 
-	public Tilescript start, end, allySpawn, enemySpawn;
+	public Tilescript start, end;
+
+	private SpawnController spawnController;
 
 	// Start is called before the first frame update
 	void Start()
@@ -25,76 +27,10 @@ public class GameControllerScript : MonoBehaviour
 			}
 		}
 
-		spawnEntities();
+		spawnController = new SpawnController(tiles);
+		spawnController.spawnEntities();
 	}
 
-	private void spawnEntities()
-	{
-		float maxDistance = 0;
-
-		for (int i = 0; i < tiles.Length; i++)
-		{
-			for (int j = i + 1; j < tiles.Length; j++)
-			{
-				if (Vector3.Distance(tiles[i].transform.position, tiles[j].transform.position) > maxDistance)
-				{
-					maxDistance = Vector3.Distance(tiles[i].transform.position, tiles[j].transform.position);
-					this.allySpawn = tiles[i];
-					this.enemySpawn = tiles[j];
-				}
-			}
-		}
-
-		// Vector3 spawnPosition = new Vector3(4, 1, 3); // Replace with your own method for calculating the spawn position
-		// GameObject wizard = Resources.Load<GameObject>("Wizard"); // Replace with the path to your ally prefab
-		// GameObject allyObject = Instantiate(wizard, spawnPosition, Quaternion.identity); // Spawn the prefab at the spawn position and parent it to the tile grid
-		spawnAllies();
-	}
-
-	public void spawnAllies()
-	{
-		// ==== TEMP CODE ==== 
-		int numWizards = PlayerPrefs.GetInt("numWizards");
-
-		Tilescript tileToSpawn = allySpawn;
-		tileToSpawn.hasEntity = true;
-		Vector3 spawnPosition;
-
-		for (int i = 0; i < numWizards; i++)
-		{
-			spawnPosition = tileToSpawn.transform.position;
-			spawnPosition.y += 1;
-			GameObject wizard = Resources.Load<GameObject>("Wizard"); // Replace with the path to your ally prefab
-			GameObject allyObject = Instantiate(wizard, spawnPosition, Quaternion.identity); // Spawn the prefab at the spawn position and parent it to the tile grid
-
-			tileToSpawn.hasEntity = true;
-			tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
-		}
-	}
-
-	public void spawnEnemies()
-	{
-
-	}
-
-	public Tilescript findClosestEmptyTileToSpawn(Tilescript tile)
-	{
-		float minDistance = 999999;
-		Tilescript closestNeighboringTile = null;
-
-		for (int i = 0; i < tile.neighbors.Count; i++)
-		{
-			float distToNeighb = Vector3.Distance(tile.neighbors[i].transform.position, allySpawn.transform.position);
-			print(distToNeighb);
-			if (distToNeighb < minDistance && tile.neighbors[i].hasEntity == false)
-			{
-				minDistance = distToNeighb;
-				closestNeighboringTile = tile.neighbors[i];
-			}
-		}
-
-		return closestNeighboringTile;
-	}
 
 	// Update is called once per frame
 	void Update()
@@ -103,7 +39,6 @@ public class GameControllerScript : MonoBehaviour
 	}
 
 	List<Tilescript> tilesQueue = new List<Tilescript>();
-
 	public void computePath(Tilescript start, Tilescript end)
 	{
 		//clear all nodes from past computing
@@ -180,9 +115,8 @@ public class GameControllerScript : MonoBehaviour
 			temp[i].setColor(Color.green * 3);
 			path.Add(temp[i]);
 		}
-
 	}
-
+	
 	public List<Tilescript> temp = new List<Tilescript>();
 	public List<Tilescript> path = new List<Tilescript>();
 }

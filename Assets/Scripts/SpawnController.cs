@@ -43,6 +43,8 @@ public class SpawnController : MonoBehaviour
 			}
 		}
 
+		print(enemySpawn.transform.position);
+
 		spawnAllies();
 	}
 
@@ -77,11 +79,6 @@ public class SpawnController : MonoBehaviour
 
 			GameObject instantiatedObject = Instantiate(clericObject, spawnPosition, Quaternion.identity);
 			Cleric cleric = instantiatedObject.GetComponent<Cleric>();
-			print("index: "+ i);
-			if (cleric == null)
-			{
-				print("I am null");
-			}
 			cleric.initialize("cleric" + i, instantiatedObject, 100f);
 
 			characterDict.Add("cleric" + i, cleric);

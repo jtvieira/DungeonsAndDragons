@@ -509,8 +509,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   start: {fileID: 2101482873}
   end: {fileID: 1545995025}
-  allySpawn: {fileID: 0}
-  enemySpawn: {fileID: 0}
   temp:
   - {fileID: 928053557}
   - {fileID: 2101482873}
@@ -2732,6 +2730,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile (35)
       objectReference: {fileID: 0}
+    - target: {fileID: 166859646529699342, guid: ba604ac9a9d7c4b58abcb5b94d1171eb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7534828726158929373, guid: ba604ac9a9d7c4b58abcb5b94d1171eb,
         type: 3}
       propertyPath: m_RootOrder
@@ -2893,6 +2896,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tile (33)
+      objectReference: {fileID: 0}
+    - target: {fileID: 166859646529699342, guid: ba604ac9a9d7c4b58abcb5b94d1171eb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7534828726158929373, guid: ba604ac9a9d7c4b58abcb5b94d1171eb,
         type: 3}

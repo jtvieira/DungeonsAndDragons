@@ -11,6 +11,8 @@ public class GameControllerScript : MonoBehaviour
 
 	private SpawnController spawnController;
 
+	Dictionary<string, Character> characters;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -32,19 +34,11 @@ public class GameControllerScript : MonoBehaviour
 		SpawnController spawnController = spawnControllerObject.AddComponent<SpawnController>();
 		spawnController.initialize(tiles);
 
+		// Important line of code... spawns all the entities; now we can have access to the characters dict
 		spawnController.spawnEntities();
 
-		// === TEST CODE ===
-		// This code demonstrates the simple nature of the dictionary!
-
-		Dictionary<string, Wizard> wizards = spawnController.getWizards();
-
-		Wizard test = wizards["wizard0"];
-		GameObject temp = test.getWizardGameObject();
-		// temp.transform.position = new Vector3(5,1,3);
-		Renderer renderer = temp.GetComponent<Renderer>(); // Get the Renderer component of the game object
-		Material material = renderer.material; // Get the Material component of the Renderer
-		material.color = Color.red;
+		// Once spawn controller spawns 
+		this.characters = spawnController.getCharacters();
 	}
 
 	// Update is called once per frame
@@ -131,7 +125,6 @@ public class GameControllerScript : MonoBehaviour
 			path.Add(temp[i]);
 		}
 	}
-	
 	public List<Tilescript> temp = new List<Tilescript>();
 	public List<Tilescript> path = new List<Tilescript>();
 }

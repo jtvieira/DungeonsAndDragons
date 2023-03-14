@@ -12,7 +12,7 @@ public class SpawnController : MonoBehaviour
 	private int numSkeletons;
 	private int numWarSkeletons;
 
-	private Dictionary<string, Wizard> wizardDict;
+	private Dictionary<string, Character> characterDict;
 
 	public void initialize(Tilescript[] tiles)
 	{
@@ -23,7 +23,7 @@ public class SpawnController : MonoBehaviour
 		this.numSkeletons = PlayerPrefs.GetInt("numSkeletons");
 		this.numWarSkeletons = PlayerPrefs.GetInt("numWarSkeletons");
 
-		wizardDict = new Dictionary<string, Wizard>();
+		characterDict = new Dictionary<string, Character>();
 	}
 
 	public void spawnEntities()
@@ -43,10 +43,11 @@ public class SpawnController : MonoBehaviour
 			}
 		}
 
-		spawnWizards();
+		spawnAllies();
+		spawnEnemies();
 	}
 
-	private void spawnWizards()
+	private void spawnAllies()
 	{
 		Tilescript tileToSpawn = allySpawn;
 		tileToSpawn.hasEntity = true;
@@ -58,30 +59,78 @@ public class SpawnController : MonoBehaviour
 			spawnPosition.y += 1;
 
 			GameObject wizardObject = Resources.Load<GameObject>("Wizard");
-            GameObject instantiatedObject = Instantiate(wizardObject, spawnPosition, Quaternion.identity);
-            Wizard wizard = instantiatedObject.GetComponent<Wizard>();
-            wizard.initialize("wizard" + i, instantiatedObject, 100f);
 
-			wizardDict.Add("wizard" + i, wizard);
+			GameObject instantiatedObject = Instantiate(wizardObject, spawnPosition, Quaternion.identity);
+			Wizard wizard = instantiatedObject.GetComponent<Wizard>();
+			wizard.initialize("wizard" + i, instantiatedObject, 100f);
+
+			characterDict.Add("wizard" + i, wizard);
 
 			tileToSpawn.hasEntity = true;
 			tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
 		}
 
-		// NOTE!!! When spawning in Clerics, we want the initial spawn to be the last tileToSpawn in
-		//   this method... this will act as the "allySpawn" later...
+		for (int i = 0; i < numClerics; i++)
+		{
+			spawnPosition = tileToSpawn.transform.position;
+			spawnPosition.y += 1;
 
-		// spawnClerics(tileToSpawn)
+			GameObject clericObject = Resources.Load<GameObject>("Cleric");
+
+			GameObject instantiatedObject = Instantiate(clericObject, spawnPosition, Quaternion.identity);
+			Cleric cleric = instantiatedObject.GetComponent<Cleric>();
+			cleric.initialize("cleric" + i, instantiatedObject, 100f);
+
+			characterDict.Add("cleric" + i, cleric);
+
+			tileToSpawn.hasEntity = true;
+			tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
+		}
 	}
 
-	public Dictionary<string, Wizard> getWizards()
+	private void spawnEnemies()
 	{
-		return wizardDict;
-	} 
+		Tilescript tileToSpawn = enemySpawn;
+		tileToSpawn.hasEntity = true;
+		Vector3 spawnPosition;
 
-	public void spawnEnemies()
+		for (int i = 0; i < numSkeletons; i++)
+		{
+			spawnPosition = tileToSpawn.transform.position;
+			spawnPosition.y += 1;
+
+			GameObject skeletonObject = Resources.Load<GameObject>("Skeleton");
+			GameObject instantiatedObject = Instantiate(skeletonObject, spawnPosition, Quaternion.identity);
+			Skeleton skeleton = instantiatedObject.GetComponent<Skeleton>();
+			skeleton.initialize("skeleton" + i, instantiatedObject, 100f);
+
+			characterDict.Add("skeleton" + i, skeleton);
+
+			tileToSpawn.hasEntity = true;
+			tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
+		}
+
+		for (int i = 0; i < numWarSkeletons; i++)
+		{
+			spawnPosition = tileToSpawn.transform.position;
+			spawnPosition.y += 1;
+
+			GameObject warSkeletonObject = Resources.Load<GameObject>("WarSkeleton");
+
+			GameObject instantiatedObject = Instantiate(warSkeletonObject, spawnPosition, Quaternion.identity);
+			WarSkeleton warSkeleton = instantiatedObject.GetComponent<WarSkeleton>();
+			warSkeleton.initialize("warSkeleton" + i, instantiatedObject, 100f);
+
+			characterDict.Add("warSkeleton" + i, warSkeleton);
+
+			tileToSpawn.hasEntity = true;
+			tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
+		}
+	}
+
+	public Dictionary<string, Character> getCharacters()
 	{
-
+		return characterDict;
 	}
 
 	public Tilescript findClosestEmptyTileToSpawn(Tilescript tile)
@@ -92,7 +141,6 @@ public class SpawnController : MonoBehaviour
 		for (int i = 0; i < tile.neighbors.Count; i++)
 		{
 			float distToNeighb = Vector3.Distance(tile.neighbors[i].transform.position, allySpawn.transform.position);
-			print(distToNeighb);
 			if (distToNeighb < minDistance && tile.neighbors[i].hasEntity == false)
 			{
 				minDistance = distToNeighb;
@@ -102,5 +150,4 @@ public class SpawnController : MonoBehaviour
 
 		return closestNeighboringTile;
 	}
-
 }

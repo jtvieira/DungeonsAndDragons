@@ -41,11 +41,11 @@ public class GameControllerScript : MonoBehaviour
 		// === TEST CODE ===
 		// This code demonstrates the simple nature of the dictionary!
 
-		Dictionary<string, Wizard> wizards = spawnController.getWizards();
+		Dictionary<string, Character> characters = spawnController.getCharacters();
 
-		Wizard test = wizards["wizard0"];
-		GameObject temp = test.getWizardGameObject();
-		// temp.transform.position = new Vector3(5,1,3);
+		// Wizard test = (Wizard)characters["wizard0"];
+		// GameObject temp = test.getWizardGameObject();
+		// // temp.transform.position = new Vector3(5,1,3);
 		// Renderer renderer = temp.GetComponent<Renderer>(); // Get the Renderer component of the game object
 		// Material material = renderer.material; // Get the Material component of the Renderer
 		// material.color = Color.red;

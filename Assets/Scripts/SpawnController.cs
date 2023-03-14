@@ -12,7 +12,7 @@ public class SpawnController : MonoBehaviour
 	private int numSkeletons;
 	private int numWarSkeletons;
 
-	private Dictionary<string, Wizard> wizardDict;
+	private Dictionary<string, Character> characterDict;
 
 	public void initialize(Tilescript[] tiles)
 	{
@@ -23,7 +23,7 @@ public class SpawnController : MonoBehaviour
 		this.numSkeletons = PlayerPrefs.GetInt("numSkeletons");
 		this.numWarSkeletons = PlayerPrefs.GetInt("numWarSkeletons");
 
-		wizardDict = new Dictionary<string, Wizard>();
+		characterDict = new Dictionary<string, Character>();
 	}
 
 	public void spawnEntities()
@@ -62,7 +62,7 @@ public class SpawnController : MonoBehaviour
             Wizard wizard = instantiatedObject.GetComponent<Wizard>();
             wizard.initialize("wizard " + i, instantiatedObject, 100f);
 
-			wizardDict.Add("wizard" + i, wizard);
+			characterDict.Add("wizard" + i, wizard);
 
 			tileToSpawn.hasEntity = true;
 			tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
@@ -74,9 +74,9 @@ public class SpawnController : MonoBehaviour
 		// spawnClerics(tileToSpawn)
 	}
 
-	public Dictionary<string, Wizard> getWizards()
+	public Dictionary<string, Character> getCharacters()
 	{
-		return wizardDict;
+		return characterDict;
 	}
 
 	public void spawnEnemies()

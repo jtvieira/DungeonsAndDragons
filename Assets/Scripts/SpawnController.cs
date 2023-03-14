@@ -60,7 +60,7 @@ public class SpawnController : MonoBehaviour
 			GameObject wizardObject = Resources.Load<GameObject>("Wizard");
             GameObject instantiatedObject = Instantiate(wizardObject, spawnPosition, Quaternion.identity);
             Wizard wizard = instantiatedObject.GetComponent<Wizard>();
-            wizard.initialize("wizard " + i, instantiatedObject, 100f);
+            wizard.initialize("wizard" + i, instantiatedObject, 100f);
 
 			wizardDict.Add("wizard" + i, wizard);
 

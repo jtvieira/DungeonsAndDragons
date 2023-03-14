@@ -46,9 +46,9 @@ public class GameControllerScript : MonoBehaviour
 		Wizard test = wizards["wizard0"];
 		GameObject temp = test.getWizardGameObject();
 		// temp.transform.position = new Vector3(5,1,3);
-		// Renderer renderer = temp.GetComponent<Renderer>(); // Get the Renderer component of the game object
-		// Material material = renderer.material; // Get the Material component of the Renderer
-		// material.color = Color.red;
+		Renderer renderer = temp.GetComponent<Renderer>(); // Get the Renderer component of the game object
+		Material material = renderer.material; // Get the Material component of the Renderer
+		material.color = Color.red;
 	}
 
 	// Update is called once per frame

@@ -52,7 +52,8 @@ public class MainMenu : MonoBehaviour
 			errorEnemyText.enabled = false;
 		}
 
-		if (int.Parse(enemyInput.text) <= 10 && (int.Parse(wizardInput.text) + int.Parse(clericInput.text) == 5))
+		if ((int.Parse(enemyInput.text) <= 10 && int.Parse(enemyInput.text) >= 1) && 
+			(int.Parse(wizardInput.text) + int.Parse(clericInput.text) == 5))
 		{
 			this.numWizards = int.Parse(wizardInput.text);
 			this.numClerics = int.Parse(clericInput.text);

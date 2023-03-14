@@ -43,8 +43,6 @@ public class SpawnController : MonoBehaviour
 			}
 		}
 
-		print(enemySpawn.transform.position);
-
 		spawnAllies();
 		spawnEnemies();
 	}
@@ -151,5 +149,4 @@ public class SpawnController : MonoBehaviour
 
 		return closestNeighboringTile;
 	}
-
 }

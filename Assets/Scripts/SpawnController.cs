@@ -43,10 +43,10 @@ public class SpawnController : MonoBehaviour
 			}
 		}
 
-		spawnWizards();
+		spawnAllies();
 	}
 
-	private void spawnWizards()
+	private void spawnAllies()
 	{
 		Tilescript tileToSpawn = allySpawn;
 		tileToSpawn.hasEntity = true;
@@ -58,11 +58,33 @@ public class SpawnController : MonoBehaviour
 			spawnPosition.y += 1;
 
 			GameObject wizardObject = Resources.Load<GameObject>("Wizard");
-            GameObject instantiatedObject = Instantiate(wizardObject, spawnPosition, Quaternion.identity);
-            Wizard wizard = instantiatedObject.GetComponent<Wizard>();
-            wizard.initialize("wizard " + i, instantiatedObject, 100f);
+			GameObject instantiatedObject = Instantiate(wizardObject, spawnPosition, Quaternion.identity);
+			Wizard wizard = instantiatedObject.GetComponent<Wizard>();
+			wizard.initialize("wizard" + i, instantiatedObject, 100f);
 
 			characterDict.Add("wizard" + i, wizard);
+
+			tileToSpawn.hasEntity = true;
+			tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
+		}
+
+		for (int i = 0; i < numClerics; i++)
+		{
+			spawnPosition = tileToSpawn.transform.position;
+			spawnPosition.y += 1;
+
+			GameObject clericObject = Resources.Load<GameObject>("Cleric");
+
+			GameObject instantiatedObject = Instantiate(clericObject, spawnPosition, Quaternion.identity);
+			Cleric cleric = instantiatedObject.GetComponent<Cleric>();
+			print("index: "+ i);
+			if (cleric == null)
+			{
+				print("I am null");
+			}
+			cleric.initialize("cleric" + i, instantiatedObject, 100f);
+
+			characterDict.Add("cleric" + i, cleric);
 
 			tileToSpawn.hasEntity = true;
 			tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
@@ -79,11 +101,6 @@ public class SpawnController : MonoBehaviour
 		return characterDict;
 	}
 
-	public void spawnEnemies()
-	{
-
-	}
-
 	public Tilescript findClosestEmptyTileToSpawn(Tilescript tile)
 	{
 		float minDistance = 999999;
@@ -92,7 +109,6 @@ public class SpawnController : MonoBehaviour
 		for (int i = 0; i < tile.neighbors.Count; i++)
 		{
 			float distToNeighb = Vector3.Distance(tile.neighbors[i].transform.position, allySpawn.transform.position);
-			print(distToNeighb);
 			if (distToNeighb < minDistance && tile.neighbors[i].hasEntity == false)
 			{
 				minDistance = distToNeighb;

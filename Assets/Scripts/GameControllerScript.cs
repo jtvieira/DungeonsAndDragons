@@ -43,19 +43,19 @@ public class GameControllerScript : MonoBehaviour
 
 	private void generateTiles()
 	{
-		Vector3 tilePosition = new Vector3(0, 0, 0);
+		// Vector3 tilePosition = new Vector3(0, 0, 0);
 
-		for (int i = 0; i < mapArray.GetLength(0); i++)
-		{
-			for (int j = 0; j < mapArray.GetLength(1); j++) // row
-			{
-				GameObject tileObject = Resources.Load<GameObject>("Tile");
+		// for (int i = 0; i < mapArray.GetLength(0); i++)
+		// {
+		// 	for (int j = 0; j < mapArray.GetLength(1); j++) // row
+		// 	{
+		// 		GameObject tileObject = Resources.Load<GameObject>("Tile");
 
-				GameObject instantiatedObject = Instantiate(tileObject, tilePosition, Quaternion.identity);
-				Cleric cleric = instantiatedObject.GetComponent<Cleric>();
-				cleric.initialize("cleric" + i, instantiatedObject, 100f);
-			}
-		}
+		// 		GameObject instantiatedObject = Instantiate(tileObject, tilePosition, Quaternion.identity);
+		// 		Cleric cleric = instantiatedObject.GetComponent<Cleric>();
+		// 		cleric.initialize("cleric" + i, instantiatedObject, 100f);
+		// 	}
+		// }
 	}
 
 	private void getNeighbors()

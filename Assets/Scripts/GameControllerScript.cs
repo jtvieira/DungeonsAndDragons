@@ -51,11 +51,15 @@ public class GameControllerScript : MonoBehaviour
 		{
 			for (int j = 0; j < mapArray.GetLength(1); j++) // row
 			{
-				GameObject tileObject = Resources.Load<GameObject>("Tile");
+				if (mapArray[i,j] == 1)
+				{
+					GameObject tileObject = Resources.Load<GameObject>("Tile");
 
-				GameObject instantiatedObject = Instantiate(tileObject, tilePosition, Quaternion.identity);
-				Tilescript tile = instantiatedObject.GetComponent<Tilescript>();
-				tile.initialize("tile" + i, tilePosition);
+					GameObject instantiatedObject = Instantiate(tileObject, tilePosition, Quaternion.identity);
+					Tilescript tile = instantiatedObject.GetComponent<Tilescript>();
+					tile.initialize("tile" + i, tilePosition);
+				}
+
 
 				xLoc += 1;
 				tilePosition = new Vector3(xLoc, 0, zLoc);

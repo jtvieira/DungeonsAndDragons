@@ -13,14 +13,16 @@ public class Tilescript : MonoBehaviour
 	public Tilescript backPointer;
 	public bool hasVisited;
 	public Vector3 location;
+	public string coordinate;
 	public string id;
 	public bool hasEntity;
 	public GameObject[] borders;
 
-	public void initialize(string id, Vector3 location)
+	public void initialize(string id, Vector3 location, string coordinate)
 	{
 		this.id = id;
 		this.location = location;
+		this.coordinate = coordinate;
 	}
 
 	public List<Tilescript> getNeighbors()

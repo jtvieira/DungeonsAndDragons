@@ -47,6 +47,8 @@ public class GameControllerScript : MonoBehaviour
 		int zLoc = 0;
 		Vector3 tilePosition = new Vector3(xLoc, 0, zLoc);
 
+		string[] alphabet = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v"};
+
 		for (int i = 0; i < mapArray.GetLength(0); i++)
 		{
 			for (int j = 0; j < mapArray.GetLength(1); j++) // row
@@ -57,9 +59,9 @@ public class GameControllerScript : MonoBehaviour
 
 					GameObject instantiatedObject = Instantiate(tileObject, tilePosition, Quaternion.identity);
 					Tilescript tile = instantiatedObject.GetComponent<Tilescript>();
-					tile.initialize("tile" + i, tilePosition);
+					string coordinate = alphabet[i] + j.ToString();
+					tile.initialize("tile" + i, tilePosition, coordinate);
 				}
-
 
 				xLoc += 1;
 				tilePosition = new Vector3(xLoc, 0, zLoc);

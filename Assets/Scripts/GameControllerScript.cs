@@ -27,7 +27,7 @@ public class GameControllerScript : MonoBehaviour
 	void Start()
 	{
 		generateTiles();
-
+		
 		getNeighbors();
 
 		GameObject spawnControllerObject = new GameObject("SpawnController");
@@ -43,25 +43,34 @@ public class GameControllerScript : MonoBehaviour
 
 	private void generateTiles()
 	{
-		// Vector3 tilePosition = new Vector3(0, 0, 0);
+		int xLoc = 0;
+		int zLoc = 0;
+		Vector3 tilePosition = new Vector3(xLoc, 0, zLoc);
 
-		// for (int i = 0; i < mapArray.GetLength(0); i++)
-		// {
-		// 	for (int j = 0; j < mapArray.GetLength(1); j++) // row
-		// 	{
-		// 		GameObject tileObject = Resources.Load<GameObject>("Tile");
+		for (int i = 0; i < mapArray.GetLength(0); i++)
+		{
+			for (int j = 0; j < mapArray.GetLength(1); j++) // row
+			{
+				GameObject tileObject = Resources.Load<GameObject>("Tile");
 
-		// 		GameObject instantiatedObject = Instantiate(tileObject, tilePosition, Quaternion.identity);
-		// 		Cleric cleric = instantiatedObject.GetComponent<Cleric>();
-		// 		cleric.initialize("cleric" + i, instantiatedObject, 100f);
-		// 	}
-		// }
+				GameObject instantiatedObject = Instantiate(tileObject, tilePosition, Quaternion.identity);
+				Tilescript tile = instantiatedObject.GetComponent<Tilescript>();
+				tile.initialize("tile" + i, tilePosition);
+
+				xLoc += 1;
+				tilePosition = new Vector3(xLoc, 0, zLoc);
+			}
+			xLoc = 0;
+			zLoc += 1;
+			tilePosition = new Vector3(xLoc, 0, zLoc);
+		}
 	}
 
 	private void getNeighbors()
 	{
 		// This loop builds the neighboring tiles for each tile
 		tiles = FindObjectsOfType<Tilescript>();
+
 		for (int i = 0; i < tiles.Length; i++)
 		{
 			for (int j = i + 1; j < tiles.Length; j++)
@@ -80,7 +89,7 @@ public class GameControllerScript : MonoBehaviour
 	{
 		//computePath(start, end);
 
-		List<Tilescript> tilesInRange = getTilesInRange(start, 3);
+		// List<Tilescript> tilesInRange = getTilesInRange(start, 3);
 	}
 
 	List<Tilescript> tilesQueue = new List<Tilescript>();

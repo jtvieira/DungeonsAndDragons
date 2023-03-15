@@ -37,7 +37,7 @@ public class GameControllerScript : MonoBehaviour
 		// Important line of code... spawns all the entities; now we can have access to the characters dict
 		spawnController.spawnEntities();
 
-		// Once spawn controller spawns 
+		// Once spawn controller spawns!
 		this.characters = spawnController.getCharacters();
 	}
 

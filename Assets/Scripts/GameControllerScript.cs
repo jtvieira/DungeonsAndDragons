@@ -5,6 +5,16 @@ using UnityEngine;
 
 public class GameControllerScript : MonoBehaviour
 {
+	int[,] mapArray = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 
+									{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+									{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+									{ 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1},
+									{ 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1},
+									{ 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1},
+									{ 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1},
+									{ 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
+									{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1} };
+
 	Tilescript[] tiles;
 
 	public Tilescript start, end;
@@ -15,6 +25,40 @@ public class GameControllerScript : MonoBehaviour
 
 	// Start is called before the first frame update
 	void Start()
+	{
+		generateTiles();
+
+		getNeighbors();
+
+		GameObject spawnControllerObject = new GameObject("SpawnController");
+		SpawnController spawnController = spawnControllerObject.AddComponent<SpawnController>();
+		spawnController.initialize(tiles);
+
+		// Important line of code... spawns all the entities; now we can have access to the characters dict
+		spawnController.spawnEntities();
+
+		// Once spawn controller spawns!
+		this.characters = spawnController.getCharacters();
+	}
+
+	private void generateTiles()
+	{
+		Vector3 tilePosition = new Vector3(0, 0, 0);
+
+		for (int i = 0; i < mapArray.GetLength(0); i++)
+		{
+			for (int j = 0; j < mapArray.GetLength(1); j++) // row
+			{
+				GameObject tileObject = Resources.Load<GameObject>("Tile");
+
+				GameObject instantiatedObject = Instantiate(tileObject, tilePosition, Quaternion.identity);
+				Cleric cleric = instantiatedObject.GetComponent<Cleric>();
+				cleric.initialize("cleric" + i, instantiatedObject, 100f);
+			}
+		}
+	}
+
+	private void getNeighbors()
 	{
 		// This loop builds the neighboring tiles for each tile
 		tiles = FindObjectsOfType<Tilescript>();
@@ -29,16 +73,6 @@ public class GameControllerScript : MonoBehaviour
 				}
 			}
 		}
-
-		GameObject spawnControllerObject = new GameObject("SpawnController");
-		SpawnController spawnController = spawnControllerObject.AddComponent<SpawnController>();
-		spawnController.initialize(tiles);
-
-		// Important line of code... spawns all the entities; now we can have access to the characters dict
-		spawnController.spawnEntities();
-
-		// Once spawn controller spawns!
-		this.characters = spawnController.getCharacters();
 	}
 
 	// Update is called once per frame

@@ -10,10 +10,9 @@ public class TileInputOverlay : MonoBehaviour
 
     private void Start()
     {
+        ShowMovePanel();
         // Add listener to the close button
         closeButton.onClick.AddListener(CloseOverlay);
-        //HideMovePanel();
-        ShowMovePanel();
     }
 
     private void CloseOverlay()

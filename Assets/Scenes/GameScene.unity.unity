@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17277591, g: 0.21590227, b: 0.29783675, a: 1}
+  m_IndirectSpecularColor: {r: 0.1727762, g: 0.21590292, b: 0.29783785, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -130,6 +130,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 798447435537452098, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 798447435537452098, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 798447435537452098, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 798447435537452098, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
+    - target: {fileID: 798447435537452098, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 1703351611213559538, guid: 3a7a4c1e46f114304bac2274426cdfa5,
         type: 3}
       propertyPath: m_Color.a
@@ -245,6 +270,81 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Colors.m_PressedColor.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Colors.m_PressedColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Colors.m_PressedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Colors.m_PressedColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.a
+      value: 0.39215687
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3057032127659715636, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6311775833108066619, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_Name
+      value: TileInputSubmitButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 7820906339987313794, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_text
+      value: "\u200B"
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a7a4c1e46f114304bac2274426cdfa5, type: 3}
 --- !u!1 &136134019
@@ -358,7 +458,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 136134019}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 5, y: 10, z: 4}
+  m_LocalPosition: {x: 8.5, y: 10, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

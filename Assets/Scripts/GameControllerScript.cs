@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
 public class GameControllerScript : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameControllerScript : MonoBehaviour
 									{ 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
 									{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1} };
 
+	string[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 	Tilescript[] tiles;
 
 	public Tilescript start, end;
@@ -22,6 +24,7 @@ public class GameControllerScript : MonoBehaviour
 	private SpawnController spawnController;
 
 	Dictionary<string, Character> characters;
+	public GameObject labelPrefab;
 
 	// Start is called before the first frame update
 	void Start()
@@ -29,6 +32,7 @@ public class GameControllerScript : MonoBehaviour
 		generateTiles();
 		
 		getNeighbors();
+		generateLabels();
 
 		GameObject spawnControllerObject = new GameObject("SpawnController");
 		SpawnController spawnController = spawnControllerObject.AddComponent<SpawnController>();
@@ -47,7 +51,6 @@ public class GameControllerScript : MonoBehaviour
 		int zLoc = 0;
 		Vector3 tilePosition = new Vector3(xLoc, 0, zLoc);
 
-		string[] alphabet = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v"};
 
 		for (int i = 0; i < mapArray.GetLength(0); i++)
 		{
@@ -69,6 +72,44 @@ public class GameControllerScript : MonoBehaviour
 			xLoc = 0;
 			zLoc += 1;
 			tilePosition = new Vector3(xLoc, 0, zLoc);
+		}
+	}
+
+	private void generateLabels() {
+
+		//A is positioned at (-1, 0, 0) B is positioned at (-1, 0, 1) C @ (-1, 0, 2) and so on
+		//0 is positioned at (0, 0, -1) 1 @ (1, 0, -1) 2 @ (2, 0, -1) and so on
+		
+		generateLetterLabels();
+		generateNumberLabels();
+	}
+
+	private void generateLetterLabels() {
+		int numRows = mapArray.GetLength(0);
+		float zpos = -0.3f;
+		for(int i = 0; i < numRows; i++) {
+			GameObject labelObject = Instantiate(labelPrefab);
+			Vector3 labelPosition = new Vector3(-1.5f, 0, zpos);
+			labelObject.transform.position = labelPosition;
+
+			TextMeshPro labelTMP = labelObject.GetComponent<TextMeshPro>();
+			labelTMP.text = alphabet[i];
+			zpos += 1.05f;
+		}
+
+	}
+
+	private void generateNumberLabels() {
+		int numRows = mapArray.GetLength(1);
+		float xpos = -0.3f;
+		for(int i = 0; i < numRows; i++) {
+			GameObject labelObject = Instantiate(labelPrefab);
+			Vector3 labelPosition = new Vector3(xpos, 0, -1.5f);
+			labelObject.transform.position = labelPosition;
+
+			TextMeshPro labelTMP = labelObject.GetComponent<TextMeshPro>();
+			labelTMP.text = i.ToString();
+			xpos += 1.05f;
 		}
 	}
 

@@ -75,7 +75,8 @@ public class GameControllerScript : MonoBehaviour
 		}
 	}
 
-	private void generateLabels() {
+	private void generateLabels() 
+	{
 
 		//A is positioned at (-1, 0, 0) B is positioned at (-1, 0, 1) C @ (-1, 0, 2) and so on
 		//0 is positioned at (0, 0, -1) 1 @ (1, 0, -1) 2 @ (2, 0, -1) and so on
@@ -84,10 +85,12 @@ public class GameControllerScript : MonoBehaviour
 		generateNumberLabels();
 	}
 
-	private void generateLetterLabels() {
+	private void generateLetterLabels() 
+	{
 		int numRows = mapArray.GetLength(0);
 		float zpos = -0.3f;
-		for(int i = 0; i < numRows; i++) {
+		for(int i = 0; i < numRows; i++) 
+		{
 			GameObject labelObject = Instantiate(labelPrefab);
 			Vector3 labelPosition = new Vector3(-1.5f, 0, zpos);
 			labelObject.transform.position = labelPosition;
@@ -96,13 +99,14 @@ public class GameControllerScript : MonoBehaviour
 			labelTMP.text = alphabet[i];
 			zpos += 1.05f;
 		}
-
 	}
 
-	private void generateNumberLabels() {
+	private void generateNumberLabels() 
+	{
 		int numRows = mapArray.GetLength(1);
 		float xpos = -0.3f;
-		for(int i = 0; i < numRows; i++) {
+		for(int i = 0; i < numRows; i++) 
+		{
 			GameObject labelObject = Instantiate(labelPrefab);
 			Vector3 labelPosition = new Vector3(xpos, 0, -1.5f);
 			labelObject.transform.position = labelPosition;
@@ -131,13 +135,6 @@ public class GameControllerScript : MonoBehaviour
 		}
 	}
 
-	// Update is called once per frame
-	void Update()
-	{
-		//computePath(start, end);
-
-		// List<Tilescript> tilesInRange = getTilesInRange(start, 3);
-	}
 
 	List<Tilescript> tilesQueue = new List<Tilescript>();
 

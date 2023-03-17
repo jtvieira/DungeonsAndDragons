@@ -23,6 +23,10 @@ public class TileInputOverlay : MonoBehaviour
 		// if (tileInput.text is valid input) - **Taylor** check for validity here :)
 		{
 			this.tileInputString = tileInput.text;
+			if (tileInputString != null)
+			{
+				print(tileInputString);
+			}
 			hideTileInputOverlay();
 		}
 		// else

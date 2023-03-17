@@ -1,39 +1,32 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class TileInputOverlay : MonoBehaviour
 {
-	[SerializeField] private RectTransform panelRectTransform;
-	[SerializeField] private Button closeButton;
-	[SerializeField] private InputField inputField;
+	public RectTransform panelRectTransform;
+	public TMP_InputField tileInput;
+	private string tileInputString;
 
-	private void Start()
-	{
-		ShowMovePanel();
-		// Add listener to the close button
-		closeButton.onClick.AddListener(CloseOverlay);
-	}
-
-	private void CloseOverlay()
-	{
-		// Destroy the overlay game object
-		Destroy(gameObject);
-	}
-
-	public void ShowMovePanel()
+	private void showTileInputOverlay()
 	{
 		panelRectTransform.gameObject.SetActive(true);
 	}
 
-	// Set the RectTransform object as not visible
-	public void HideMovePanel()
+	public void hideTileInputOverlay()
 	{
 		panelRectTransform.gameObject.SetActive(false);
 	}
 
-	// Get the text from the input field
-	public string GetInputText()
+	public void tileInputButton()
 	{
-		return inputField.text;
+		// if (tileInput.text is valid input) - **Taylor** check for validity here :)
+		{
+			this.tileInputString = tileInput.text;
+		}
+		// else
+		{
+			// present error message on menu
+		} 
 	}
 }

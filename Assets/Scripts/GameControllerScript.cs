@@ -32,6 +32,7 @@ public class GameControllerScript : MonoBehaviour
 		generateTiles();
 		
 		getNeighbors();
+		
 		generateLabels();
 
 		GameObject spawnControllerObject = new GameObject("SpawnController");

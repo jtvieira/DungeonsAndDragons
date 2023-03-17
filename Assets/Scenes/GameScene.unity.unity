@@ -275,6 +275,11 @@ PrefabInstance:
       propertyPath: tileInput
       value: 
       objectReference: {fileID: 56504445}
+    - target: {fileID: 1703351612748777195, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2926535410326129137, guid: 3a7a4c1e46f114304bac2274426cdfa5,
         type: 3}
       propertyPath: m_Colors.m_NormalColor.a
@@ -752,3 +757,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &812853178 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1703351612748777195, guid: 3a7a4c1e46f114304bac2274426cdfa5,
+    type: 3}
+  m_PrefabInstance: {fileID: 56504444}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &812853184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812853178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295

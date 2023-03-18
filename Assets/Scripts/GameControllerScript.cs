@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using TMPro;
 
+using Characters;
+
 public class GameControllerScript : MonoBehaviour
 {
 	int[,] mapArray = new int[,] { { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, 
@@ -30,8 +32,8 @@ public class GameControllerScript : MonoBehaviour
 	void Start()
 	{
 		generateTiles();
-		
 		getNeighbors();
+		
 		
 		generateLabels();
 

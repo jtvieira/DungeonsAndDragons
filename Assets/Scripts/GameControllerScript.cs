@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Characters;
+using System.Collections;
 
 public class GameControllerScript : MonoBehaviour
 {
@@ -63,8 +64,19 @@ public class GameControllerScript : MonoBehaviour
 
 	private void executePlayerMove(Character characterPlayer)
 	{
-		
+		this.moveChoiceOverlay.showMoveChoiceOverlay();
+
+		// this.moveChoiceOverlay.buttonClicked += onMoveChoiceClicked;
 	}
+	
+	// The commented code below was originally how I was handling the button event; not sure if it's the best way
+
+	// private void onMoveChoiceClicked(string moveChoice)
+	// {
+	// 	print(moveChoice);
+
+	// 	moveChoiceOverlay.buttonClicked -= onMoveChoiceClicked;
+	// }
 
 	// AI code goes here (at some point)
 	private void executeAiMove(Character characterAi)

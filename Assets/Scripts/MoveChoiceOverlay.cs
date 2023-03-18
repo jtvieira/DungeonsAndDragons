@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,11 @@ public class MoveChoiceOverlay : MonoBehaviour
 {
 	public RectTransform panelRectTransform;
 
-	private void showMoveChoiceOverlay()
+	public event System.Action<string> buttonClicked;
+
+	public bool hasClicked = true;
+
+	public void showMoveChoiceOverlay()
 	{
 		panelRectTransform.gameObject.SetActive(true);
 	}
@@ -20,17 +25,23 @@ public class MoveChoiceOverlay : MonoBehaviour
 	{
 		print("move move");
 		hideMoveChoiceOverlay();
+
+		buttonClicked?.Invoke("MM");
 	}
 
 	public void attackMoveButton()
 	{
 		print("attack move");
 		hideMoveChoiceOverlay();
+
+		buttonClicked?.Invoke("AM");
 	}
 
 	public void moveAttackButton()
 	{
 		print("move attack");
 		hideMoveChoiceOverlay();
+
+		buttonClicked?.Invoke("MA");
 	}
 }

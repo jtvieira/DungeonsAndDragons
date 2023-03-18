@@ -6,10 +6,11 @@ namespace Characters
 {
 	public class Cleric : Character
 	{
-		public void initialize(string id, GameObject clericGameObj, float hp)
+		public void initialize(string id, GameObject clericGameObj, Tilescript currentTile, float hp)
 		{
 			this.id = id;
 			this.characterObject = clericGameObj;
+			this.currentTile = currentTile;
 			this.hp = hp;
 		}
 	}

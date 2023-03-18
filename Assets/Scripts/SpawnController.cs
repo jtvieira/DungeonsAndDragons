@@ -64,11 +64,12 @@ public class SpawnController : MonoBehaviour
 
 			GameObject instantiatedObject = Instantiate(wizardObject, spawnPosition, Quaternion.identity);
 			Wizard wizard = instantiatedObject.GetComponent<Wizard>();
-			wizard.initialize("wizard" + i, instantiatedObject, 100f);
+			wizard.initialize("wizard" + i, instantiatedObject, tileToSpawn, 100f);
 
 			characterDict.Add("wizard" + i, wizard);
 
 			tileToSpawn.hasEntity = true;
+
 			tileToSpawn = findClosestEmptyTileToSpawn(tileToSpawn);
 		}
 
@@ -81,7 +82,7 @@ public class SpawnController : MonoBehaviour
 
 			GameObject instantiatedObject = Instantiate(clericObject, spawnPosition, Quaternion.identity);
 			Cleric cleric = instantiatedObject.GetComponent<Cleric>();
-			cleric.initialize("cleric" + i, instantiatedObject, 100f);
+			cleric.initialize("cleric" + i, instantiatedObject, tileToSpawn, 100f);
 
 			characterDict.Add("cleric" + i, cleric);
 
@@ -104,7 +105,7 @@ public class SpawnController : MonoBehaviour
 			GameObject skeletonObject = Resources.Load<GameObject>("Skeleton");
 			GameObject instantiatedObject = Instantiate(skeletonObject, spawnPosition, Quaternion.identity);
 			Skeleton skeleton = instantiatedObject.GetComponent<Skeleton>();
-			skeleton.initialize("skeleton" + i, instantiatedObject, 100f);
+			skeleton.initialize("skeleton" + i, instantiatedObject, tileToSpawn, 100f);
 
 			characterDict.Add("skeleton" + i, skeleton);
 
@@ -121,7 +122,7 @@ public class SpawnController : MonoBehaviour
 
 			GameObject instantiatedObject = Instantiate(warSkeletonObject, spawnPosition, Quaternion.identity);
 			WarSkeleton warSkeleton = instantiatedObject.GetComponent<WarSkeleton>();
-			warSkeleton.initialize("warSkeleton" + i, instantiatedObject, 100f);
+			warSkeleton.initialize("warSkeleton" + i, instantiatedObject, tileToSpawn, 100f);
 
 			characterDict.Add("warSkeleton" + i, warSkeleton);
 

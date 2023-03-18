@@ -5,9 +5,14 @@ using Characters;
 
 public class GameControllerScript : MonoBehaviour
 {
+	// Main containers
 	private Tilescript[] tiles;
 	private Dictionary<string, Character> characters;
 	private List<string> moveOrder;
+
+	// UI Overlay objects
+	
+	private 
 
 	// Start is called before the first frame update
 	void Start()
@@ -49,7 +54,7 @@ public class GameControllerScript : MonoBehaviour
 
 	private void executePlayerMove(Character characterPlayer)
 	{
-		
+
 	}
 
 	// AI code goes here (at some point)

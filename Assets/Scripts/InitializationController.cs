@@ -27,8 +27,6 @@ public class InitializationController : MonoBehaviour
 
 	private Dictionary<string, Character> characters;
 
-	public GameObject labelPrefab;
-
 	public void buildGame()
 	{
 		generateTiles();
@@ -107,7 +105,9 @@ public class InitializationController : MonoBehaviour
 		float zpos = -0.3f;
 		for(int i = 0; i < numRows; i++) 
 		{
-			GameObject labelObject = Instantiate(labelPrefab);
+			GameObject initialLabelObject = Resources.Load<GameObject>("Label");
+			GameObject labelObject = Instantiate(initialLabelObject);
+				
 			Vector3 labelPosition = new Vector3(-1.5f, 0, zpos);
 			labelObject.transform.position = labelPosition;
 
@@ -123,7 +123,9 @@ public class InitializationController : MonoBehaviour
 		float xpos = -0.3f;
 		for(int i = 0; i < numRows; i++) 
 		{
-			GameObject labelObject = Instantiate(labelPrefab);
+			GameObject initialLabelObject = Resources.Load<GameObject>("Label");
+			GameObject labelObject = Instantiate(initialLabelObject);
+
 			Vector3 labelPosition = new Vector3(xpos, 0, -1.5f);
 			labelObject.transform.position = labelPosition;
 

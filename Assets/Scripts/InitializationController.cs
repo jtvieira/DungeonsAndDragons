@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
+
 
 using Characters;
 
@@ -27,6 +29,8 @@ public class InitializationController : MonoBehaviour
 
 	private Dictionary<string, Character> characters;
 
+	private List<string> moveOrder;
+
 	public void buildGame()
 	{
 		generateTiles();
@@ -41,6 +45,23 @@ public class InitializationController : MonoBehaviour
 		this.spawnController.spawnEntities();
 
 		this.characters = spawnController.getCharacters();
+
+		generateMoveOrder();
+	}
+
+	public Tilescript[] getTiles()
+	{
+		return this.tiles;
+	}
+	
+	public Dictionary<string, Character> getCharacters()
+	{
+		return this.characters;
+	}
+
+	public List<string> getMoveOrder()
+	{
+		return this.moveOrder;
 	}
 
 	private void generateTiles()
@@ -135,4 +156,23 @@ public class InitializationController : MonoBehaviour
 		}
 	}
 
+	private List<string> generateMoveOrder()
+	{
+		moveOrder = characters.Keys.ToList();
+
+		System.Random rng = new System.Random();
+
+		int n = moveOrder.Count;
+
+		while (n > 1)
+		{
+			n--;
+			int k = rng.Next(n + 1);
+			string temp = moveOrder[k];
+			moveOrder[k] = moveOrder[n];
+			moveOrder[n] = temp;
+		}
+
+		return moveOrder;
+	}
 }

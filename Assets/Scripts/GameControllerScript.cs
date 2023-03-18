@@ -20,4 +20,9 @@ public class GameControllerScript : MonoBehaviour
 		this.characters = initController.getCharacters();
 		this.moveOrder = initController.getMoveOrder();
 	}
+
+	void beginTurnSystem()
+	{
+		
+	}
 }

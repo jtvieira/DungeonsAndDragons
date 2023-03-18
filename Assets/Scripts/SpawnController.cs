@@ -130,11 +130,6 @@ public class SpawnController : MonoBehaviour
 		}
 	}
 
-	public Dictionary<string, Character> getCharacters()
-	{
-		return characterDict;
-	}
-
 	public Tilescript findClosestEmptyTileToSpawn(Tilescript tile)
 	{
 		float minDistance = 999999;
@@ -151,5 +146,10 @@ public class SpawnController : MonoBehaviour
 		}
 
 		return closestNeighboringTile;
+	}
+
+	public Dictionary<string, Character> getCharacters()
+	{
+		return characterDict;
 	}
 }

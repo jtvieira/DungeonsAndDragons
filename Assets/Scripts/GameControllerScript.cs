@@ -19,6 +19,7 @@ public class GameControllerScript : MonoBehaviour
 									{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1} };
 
 	string[] alphabet = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+
 	Tilescript[] tiles;
 
 	public Tilescript start, end;
@@ -26,15 +27,16 @@ public class GameControllerScript : MonoBehaviour
 	private SpawnController spawnController;
 
 	Dictionary<string, Character> characters;
+
 	public GameObject labelPrefab;
+
+	private InitializationController initController;
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		generateTiles();
 		getNeighbors();
-		
-		
 		generateLabels();
 
 		GameObject spawnControllerObject = new GameObject("SpawnController");

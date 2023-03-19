@@ -8,6 +8,15 @@ public class TileInputOverlay : MonoBehaviour
 	public TMP_InputField tileInput;
 	private string tileInputString;
 
+	// This ensures the RectTransform object is not null when the class instantiates
+	private void Awake()
+	{
+		if (panelRectTransform == null)
+		{
+			panelRectTransform = transform.GetChild(0).GetComponent<RectTransform>();
+		}
+	}
+
 	private void showTileInputOverlay()
 	{
 		panelRectTransform.gameObject.SetActive(true);

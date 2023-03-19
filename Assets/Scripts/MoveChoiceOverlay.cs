@@ -11,20 +11,30 @@ public class MoveChoiceOverlay : MonoBehaviour
 
 	public bool hasClicked = true;
 
+	// This ensures the RectTransform object is not null when the class instantiates
+	private void Awake()
+	{
+		if (panelRectTransform == null)
+		{
+			panelRectTransform = transform.GetChild(0).GetComponent<RectTransform>();
+		}
+	}
+
 	public void showMoveChoiceOverlay()
 	{
-		panelRectTransform.gameObject.SetActive(true);
+		this.panelRectTransform.gameObject.SetActive(true);
 	}
 
 	public void hideMoveChoiceOverlay()
 	{
-		panelRectTransform.gameObject.SetActive(false);
+		print(this.panelRectTransform == null);
+		this.panelRectTransform.gameObject.SetActive(false);
 	}
 
 	public void moveMoveButton()
 	{
-		print("move move");
 		hideMoveChoiceOverlay();
+		print(this.panelRectTransform == null);
 
 		buttonClicked?.Invoke("MM");
 	}
@@ -32,7 +42,7 @@ public class MoveChoiceOverlay : MonoBehaviour
 	public void attackMoveButton()
 	{
 		print("attack move");
-		hideMoveChoiceOverlay();
+		// hideMoveChoiceOverlay();
 
 		buttonClicked?.Invoke("AM");
 	}
@@ -40,7 +50,7 @@ public class MoveChoiceOverlay : MonoBehaviour
 	public void moveAttackButton()
 	{
 		print("move attack");
-		hideMoveChoiceOverlay();
+		// hideMoveChoiceOverlay();
 
 		buttonClicked?.Invoke("MA");
 	}

@@ -12,8 +12,8 @@ public class GameControllerScript : MonoBehaviour
 	private List<string> moveOrder;
 
 	// UI Overlay objects
-	// private MoveChoiceOverlay moveChoiceOverlay;
-	// private TileInputOverlay tileInputOverlay;
+	private MoveChoiceOverlay moveChoiceOverlay;
+	private TileInputOverlay tileInputOverlay;
 
 	// Start is called before the first frame update
 	void Start()
@@ -64,7 +64,10 @@ public class GameControllerScript : MonoBehaviour
 
 	private void executePlayerMove(Character characterPlayer)
 	{
-		// this.moveChoiceOverlay.showMoveChoiceOverlay();
+		// When the player move first starts, we need to pop up a menu for their move choice
+		GameObject moveChoiceOverlayPrefab = Resources.Load<GameObject>("MoveChoiceOverlay");
+		GameObject moveChoiceOverlayObject = Instantiate(moveChoiceOverlayPrefab);
+		MoveChoiceOverlay moveChoiceOverlay = moveChoiceOverlayObject.AddComponent<MoveChoiceOverlay>();
 
 		// this.moveChoiceOverlay.buttonClicked += onMoveChoiceClicked;
 	}

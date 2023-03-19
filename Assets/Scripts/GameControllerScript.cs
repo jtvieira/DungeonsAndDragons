@@ -54,6 +54,7 @@ public class GameControllerScript : MonoBehaviour
 			if (characterId.StartsWith("wizard") || characterId.StartsWith("cleric"))
 			{
 				executePlayerMove(currentCharacter);
+				break;
 			}
 			else // else, we know it's AI...
 			{
@@ -68,18 +69,7 @@ public class GameControllerScript : MonoBehaviour
 		GameObject moveChoiceOverlayPrefab = Resources.Load<GameObject>("MoveChoiceOverlay");
 		GameObject moveChoiceOverlayObject = Instantiate(moveChoiceOverlayPrefab);
 		MoveChoiceOverlay moveChoiceOverlay = moveChoiceOverlayObject.AddComponent<MoveChoiceOverlay>();
-
-		// this.moveChoiceOverlay.buttonClicked += onMoveChoiceClicked;
 	}
-	
-	// The commented code below was originally how I was handling the button event; not sure if it's the best way
-
-	// private void onMoveChoiceClicked(string moveChoice)
-	// {
-	// 	print(moveChoice);
-
-	// 	moveChoiceOverlay.buttonClicked -= onMoveChoiceClicked;
-	// }
 
 	// AI code goes here (at some point)
 	private void executeAiMove(Character characterAi)

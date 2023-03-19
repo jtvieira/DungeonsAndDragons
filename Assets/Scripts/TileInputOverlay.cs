@@ -43,4 +43,9 @@ public class TileInputOverlay : MonoBehaviour
 			// present error message on menu
 		} 
 	}
+
+	public void Destroy()
+	{
+		Destroy(gameObject);
+	}
 }

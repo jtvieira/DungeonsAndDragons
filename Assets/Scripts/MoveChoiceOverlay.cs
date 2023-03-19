@@ -27,14 +27,12 @@ public class MoveChoiceOverlay : MonoBehaviour
 
 	public void hideMoveChoiceOverlay()
 	{
-		print(this.panelRectTransform == null);
 		this.panelRectTransform.gameObject.SetActive(false);
 	}
 
 	public void moveMoveButton()
 	{
 		hideMoveChoiceOverlay();
-		print(this.panelRectTransform == null);
 
 		buttonClicked?.Invoke("MM");
 	}
@@ -53,5 +51,10 @@ public class MoveChoiceOverlay : MonoBehaviour
 		// hideMoveChoiceOverlay();
 
 		buttonClicked?.Invoke("MA");
+	}
+
+	public void Destroy()
+	{
+		Destroy(gameObject);
 	}
 }

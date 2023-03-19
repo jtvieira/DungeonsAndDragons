@@ -52,6 +52,7 @@ public class GameControllerScript : MonoBehaviour
 			if (characterId.StartsWith("wizard") || characterId.StartsWith("cleric"))
 			{
 				executePlayerMove(currentCharacter);
+				print ("after");
 				break;
 			}
 			else // else, we know it's AI...
@@ -74,19 +75,21 @@ public class GameControllerScript : MonoBehaviour
 
 	private IEnumerator GetPlayerMoveSelection(Character characterPlayer, Action<string> selectionCallback)
 	{
+		
 		// Instantiate the MoveChoiceOverlay prefab
-		print("FIRST" + GameObject.FindObjectsOfType<MoveChoiceOverlay>().Length);
+		// print("FIRST" + GameObject.FindObjectsOfType<MoveChoiceOverlay>().Length);
 
 		GameObject moveChoiceOverlayPrefab = Resources.Load<GameObject>("MoveChoiceOverlay");
 		GameObject moveChoiceOverlayObject = Instantiate(moveChoiceOverlayPrefab);
 
-		print("SECOND" + GameObject.FindObjectsOfType<MoveChoiceOverlay>().Length);
+		// print("SECOND" + GameObject.FindObjectsOfType<MoveChoiceOverlay>().Length);
 		
-		this.moveChoiceOverlay = moveChoiceOverlayObject.AddComponent<MoveChoiceOverlay>();
-		print("THIRD" + GameObject.FindObjectsOfType<MoveChoiceOverlay>().Length);
+		this.moveChoiceOverlay = moveChoiceOverlayObject.GetComponentInChildren<MoveChoiceOverlay>();
+		// print("THIRD" + GameObject.FindObjectsOfType<MoveChoiceOverlay>().Length);
 
 		print("before yield");
-		print(moveChoiceOverlay.GetInstanceID());		
+
+		// print(this.moveChoiceOverlay.GetInstanceID());
 		// Pause the game flow
 		while (!moveChoiceOverlay.isButtonClicked())
 		{

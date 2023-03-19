@@ -12,8 +12,8 @@ public class GameControllerScript : MonoBehaviour
 	private List<string> moveOrder;
 
 	// UI Overlay objects
-	private MoveChoiceOverlay moveChoiceOverlay;
-	private TileInputOverlay tileInputOverlay;
+	// private MoveChoiceOverlay moveChoiceOverlay;
+	// private TileInputOverlay tileInputOverlay;
 
 	// Start is called before the first frame update
 	void Start()
@@ -26,14 +26,14 @@ public class GameControllerScript : MonoBehaviour
 		this.characters = initController.getCharacters();
 		this.moveOrder = initController.getMoveOrder();
 
-		// Get the existing Overlay script components
-		// **NOTE - every overlay we add will have to be added here
-		this.moveChoiceOverlay = FindObjectOfType<MoveChoiceOverlay>();
-		this.tileInputOverlay = FindObjectOfType<TileInputOverlay>();
+		// // Get the existing Overlay script components
+		// // **NOTE - every overlay we add will have to be added here
+		// this.moveChoiceOverlay = FindObjectOfType<MoveChoiceOverlay>();
+		// this.tileInputOverlay = FindObjectOfType<TileInputOverlay>();
 
-		// Hide the overlays at the beginning of the program
-		this.moveChoiceOverlay.hideMoveChoiceOverlay();
-		this.tileInputOverlay.hideTileInputOverlay();
+		// // Hide the overlays at the beginning of the program
+		// this.moveChoiceOverlay.hideMoveChoiceOverlay();
+		// this.tileInputOverlay.hideTileInputOverlay();
 
 		executeTurnSystem();
 	}
@@ -64,7 +64,7 @@ public class GameControllerScript : MonoBehaviour
 
 	private void executePlayerMove(Character characterPlayer)
 	{
-		this.moveChoiceOverlay.showMoveChoiceOverlay();
+		// this.moveChoiceOverlay.showMoveChoiceOverlay();
 
 		// this.moveChoiceOverlay.buttonClicked += onMoveChoiceClicked;
 	}

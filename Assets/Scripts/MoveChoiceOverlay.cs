@@ -7,9 +7,8 @@ public class MoveChoiceOverlay : MonoBehaviour
 {
 	public RectTransform panelRectTransform;
 
-	public event System.Action<string> buttonClicked;
-
-	public bool hasClicked = true;
+	private string selection = "";
+	private bool buttonClicked = false;
 
 	// This ensures the RectTransform object is not null when the class instantiates
 	private void Awake()
@@ -32,28 +31,40 @@ public class MoveChoiceOverlay : MonoBehaviour
 
 	public void moveMoveButton()
 	{
+		print("move move");
+		this.selection = "MM";
+		this.buttonClicked = true;
 		hideMoveChoiceOverlay();
-
-		buttonClicked?.Invoke("MM");
+		print(this.GetInstanceID());
 	}
 
 	public void attackMoveButton()
 	{
 		print("attack move");
-		// hideMoveChoiceOverlay();
-
-		buttonClicked?.Invoke("AM");
+		this.selection = "AM";
+		this.buttonClicked = true;
+		hideMoveChoiceOverlay();
 	}
 
 	public void moveAttackButton()
 	{
 		print("move attack");
-		// hideMoveChoiceOverlay();
-
-		buttonClicked?.Invoke("MA");
+		this.selection = "MA";
+		this.buttonClicked = true;
+		hideMoveChoiceOverlay();
 	}
 
-	public void Destroy()
+	public string getSelection()
+	{
+		return selection;
+	}
+
+	public bool isButtonClicked()
+	{
+		return buttonClicked;
+	}
+
+	public void destroyOverlay()
 	{
 		Destroy(gameObject);
 	}

@@ -3,6 +3,7 @@ using UnityEngine;
 
 using Characters;
 using System.Collections;
+using System;
 
 public class GameControllerScript : MonoBehaviour
 {
@@ -11,10 +12,7 @@ public class GameControllerScript : MonoBehaviour
 	private Dictionary<string, Character> characters;
 	private List<string> moveOrder;
 
-	// UI Overlay objects
 	private MoveChoiceOverlay moveChoiceOverlay;
-	private TileInputOverlay tileInputOverlay;
-
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -66,9 +64,49 @@ public class GameControllerScript : MonoBehaviour
 	private void executePlayerMove(Character characterPlayer)
 	{
 		// When the player move first starts, we need to pop up a menu for their move choice
+		// Call coroutine to get player's move selection
+		StartCoroutine(GetPlayerMoveSelection(characterPlayer, (string selection) =>
+		{
+			// Handle the user's selection
+			print($"Player selected: {selection}");
+		}));
+	}
+
+	private IEnumerator GetPlayerMoveSelection(Character characterPlayer, Action<string> selectionCallback)
+	{
+		// Instantiate the MoveChoiceOverlay prefab
+		print("FIRST" + GameObject.FindObjectsOfType<MoveChoiceOverlay>().Length);
+
 		GameObject moveChoiceOverlayPrefab = Resources.Load<GameObject>("MoveChoiceOverlay");
 		GameObject moveChoiceOverlayObject = Instantiate(moveChoiceOverlayPrefab);
-		MoveChoiceOverlay moveChoiceOverlay = moveChoiceOverlayObject.AddComponent<MoveChoiceOverlay>();
+
+		print("SECOND" + GameObject.FindObjectsOfType<MoveChoiceOverlay>().Length);
+		
+		this.moveChoiceOverlay = moveChoiceOverlayObject.AddComponent<MoveChoiceOverlay>();
+		print("THIRD" + GameObject.FindObjectsOfType<MoveChoiceOverlay>().Length);
+
+		print("before yield");
+		print(moveChoiceOverlay.GetInstanceID());		
+		// Pause the game flow
+		while (!moveChoiceOverlay.isButtonClicked())
+		{
+			yield return null;
+		}
+
+		print("after yield");
+
+		// Get the result of the button press (selection made by the user)
+		string selection = moveChoiceOverlay.getSelection();
+
+		// Hide the overlay
+		moveChoiceOverlay.hideMoveChoiceOverlay();
+		moveChoiceOverlay.destroyOverlay();
+
+		// Unpause the game flow
+		yield return null;
+
+		// Pass the result of the button press (selection made by the user) back to executePlayerMove() method for handling
+		selectionCallback(selection);
 	}
 
 	// AI code goes here (at some point)

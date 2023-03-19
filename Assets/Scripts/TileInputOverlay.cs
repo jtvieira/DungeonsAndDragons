@@ -44,7 +44,7 @@ public class TileInputOverlay : MonoBehaviour
 		} 
 	}
 
-	public void Destroy()
+	public void destroyOverlay()
 	{
 		Destroy(gameObject);
 	}

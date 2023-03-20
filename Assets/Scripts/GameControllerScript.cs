@@ -28,7 +28,7 @@ public class GameControllerScript : MonoBehaviour
 		StartCoroutine(executeTurnSystem());
 	}
 
-	// This is the primary loop of the entire game.
+	// This is the primary loop of the entire game
 	private IEnumerator executeTurnSystem()
 	{
 		foreach (string characterId in moveOrder)

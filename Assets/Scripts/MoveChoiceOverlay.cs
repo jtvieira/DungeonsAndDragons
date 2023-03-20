@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MoveChoiceOverlay : MonoBehaviour
 {
 	public RectTransform panelRectTransform;
+	public TextMeshProUGUI playerText;
 
 	private string selection = "";
 	private bool buttonClicked = false;
@@ -58,6 +60,11 @@ public class MoveChoiceOverlay : MonoBehaviour
 	public bool isButtonClicked()
 	{
 		return buttonClicked;
+	}
+
+	public void setPlayerText(string playerId)
+	{
+		playerText.SetText($"Pick your move, {playerId}");
 	}
 
 	public void destroyOverlay()

@@ -36,6 +36,10 @@ public class GameControllerScript : MonoBehaviour
 			// Grab the character object from the characters dictionary
 			Character currentCharacter = characters[characterId];
 			
+			Renderer currentCharacterRenderer = currentCharacter.getCharacterGameObj().GetComponent<Renderer>();
+			Color originalMaterial = currentCharacterRenderer.material.color;
+			currentCharacterRenderer.material.color = Color.red;
+
 			string selectedMove = "";
 
 			// If the character is dead (hp <= 0), jump to the next in the loop
@@ -54,7 +58,7 @@ public class GameControllerScript : MonoBehaviour
 					// Resume the main thread with the selected move
 					string selectedMove = selection;
 				}));
-				
+
 				// Perform the selected move
 				if (selectedMove == "movemove")
 				{
@@ -73,18 +77,21 @@ public class GameControllerScript : MonoBehaviour
 			{
 				// executeAiMove(currentCharacter);
 			}
+
+			currentCharacterRenderer.material.color = originalMaterial;
 		}
 	}
 
 	private IEnumerator GetPlayerMoveSelection(Character characterPlayer, Action<string> selectionCallback)
 	{
-		// Instantiate the MoveChoiceOverlay prefab
+		// Instantiate the MoveChoiceOverlay prefab (*** this happens on each turn ***)
 		GameObject moveChoiceOverlayPrefab = Resources.Load<GameObject>("MoveChoiceOverlay");
 		GameObject moveChoiceOverlayObject = Instantiate(moveChoiceOverlayPrefab);
 
 		this.moveChoiceOverlay = moveChoiceOverlayObject.GetComponentInChildren<MoveChoiceOverlay>();
+		this.moveChoiceOverlay.setPlayerText(characterPlayer.getId());
 
-		// Pause the game flow
+		// Pause the game flow while the button is not clicked
 		while (!moveChoiceOverlay.isButtonClicked())
 		{
 			yield return null;

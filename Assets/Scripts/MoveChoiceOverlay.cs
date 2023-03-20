@@ -31,25 +31,21 @@ public class MoveChoiceOverlay : MonoBehaviour
 
 	public void moveMoveButton()
 	{
-		print("move move");
-		this.selection = "MM";
+		this.selection = "movemove";
 		this.buttonClicked = true;
 		hideMoveChoiceOverlay();
-		print(this.GetInstanceID());
 	}
 
 	public void attackMoveButton()
 	{
-		print("attack move");
-		this.selection = "AM";
+		this.selection = "attackmove";
 		this.buttonClicked = true;
 		hideMoveChoiceOverlay();
 	}
 
 	public void moveAttackButton()
 	{
-		print("move attack");
-		this.selection = "MA";
+		this.selection = "moveattack";
 		this.buttonClicked = true;
 		hideMoveChoiceOverlay();
 	}

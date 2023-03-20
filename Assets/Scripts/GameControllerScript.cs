@@ -75,7 +75,6 @@ public class GameControllerScript : MonoBehaviour
 
 	private IEnumerator GetPlayerMoveSelection(Character characterPlayer, Action<string> selectionCallback)
 	{
-		
 		// Instantiate the MoveChoiceOverlay prefab
 		// print("FIRST" + GameObject.FindObjectsOfType<MoveChoiceOverlay>().Length);
 

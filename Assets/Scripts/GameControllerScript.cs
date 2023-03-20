@@ -37,7 +37,7 @@ public class GameControllerScript : MonoBehaviour
 	}
 
 	// This is the primary loop of the entire game.
-	private	IEnumerator executeTurnSystem()
+	private	void executeTurnSystem()
 	{
 		foreach (string characterId in moveOrder)
 		{
@@ -51,14 +51,9 @@ public class GameControllerScript : MonoBehaviour
 			// If the character is a wizard or a cleric...
 			if (characterId.StartsWith("wizard") || characterId.StartsWith("cleric"))
 			{
-				// executePlayerMove(currentCharacter);
-				// print ("after");
-				// break;
-
-				yield return StartCoroutine(GetPlayerMoveSelection(currentCharacter, (string selection) =>
-				{
-					print($"Player selected: {selection}");
-				}));
+				executePlayerMove(currentCharacter);
+				print ("after");
+				break;
 			}
 			else // else, we know it's AI...
 			{

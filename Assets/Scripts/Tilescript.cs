@@ -72,6 +72,11 @@ public class Tilescript : MonoBehaviour
 		return backPointer;
 	}
 
+	public string getCoordinate()
+	{
+		return this.coordinate;
+	}
+
 	public void setColor(Color theColor)
 	{
 		borders[0].GetComponent<MeshRenderer>().material.SetColor("_BaseColor", theColor);

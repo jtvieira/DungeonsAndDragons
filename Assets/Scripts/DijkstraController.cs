@@ -1,20 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DijkstraController : MonoBehaviour
 {
-	Tilescript[] tiles;
+	Tilescript[] tilesComputePath;
 	public Tilescript start, end;
+
+	Tilescript[] allTiles;
 
 	List<Tilescript> tilesQueue = new List<Tilescript>();
 
 	public void computePath(Tilescript start, Tilescript end)
 	{
 		//clear all nodes from past computing
-		for (int i = 0; i < tiles.Length; i++)
+		for (int i = 0; i < tilesComputePath.Length; i++)
 		{
-			tiles[i].clear();
+			tilesComputePath[i].clear();
 		}
 
 		Tilescript current;
@@ -86,19 +89,19 @@ public class DijkstraController : MonoBehaviour
 			path.Add(temp[i]);
 		}
 	}
-
 	public List<Tilescript> temp = new List<Tilescript>();
 	public List<Tilescript> path = new List<Tilescript>();
 
+
 	public List<Tilescript> getTilesInRange(Tilescript startTile, int range)
 	{
-		List<Tilescript> tilesInRange = new List<Tilescript>();
+		HashSet<Tilescript> tilesInRange = new HashSet<Tilescript>();
 		tilesInRange.Add(startTile);
 
 		// loop through all tiles up to the specified range
 		for (int i = 0; i < range; i++)
 		{
-			List<Tilescript> newTiles = new List<Tilescript>();
+			HashSet<Tilescript> newTiles = new HashSet<Tilescript>();
 
 			// loop through all tiles in the current range
 			foreach (Tilescript tile in tilesInRange)
@@ -129,8 +132,29 @@ public class DijkstraController : MonoBehaviour
 				tilesInRange.Add(tile);
 			}
 		}
+		
+		return tilesInRange.ToList();
+	}
 
-		return tilesInRange;
+	public bool isValidCoordinate(List<Tilescript> tiles, string coordinate)
+	{
+		foreach (Tilescript tile in tiles)
+		{
+			if (coordinate == tile.getCoordinate() && tile.hasEntity == false)
+				return true;
+		}
+		return false;
+	}
+
+	public Tilescript getTileFromCoordinate(string coordinate)
+	{
+		foreach (Tilescript tile in allTiles)
+		{
+			if (tile.coordinate == coordinate)
+				return tile;
+		}
+		Debug.Log("Error: no tile found");
+		return null;
 	}
 
 	public void colorTiles(List<Tilescript> tilesToColor, string colorString)
@@ -150,5 +174,10 @@ public class DijkstraController : MonoBehaviour
 			}
 		}
 
+	}
+
+	public void setAllTiles(Tilescript[] tiles)
+	{
+		this.allTiles = tiles;
 	}
 }

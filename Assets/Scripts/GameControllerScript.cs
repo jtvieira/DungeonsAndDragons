@@ -24,12 +24,13 @@ public class GameControllerScript : MonoBehaviour
 		InitializationController initController = initControllerObject.AddComponent<InitializationController>();
 		initController.buildGame();
 
-		GameObject dijkstraControllerObject = new GameObject("DijkstraController");
-		this.dijkstra = dijkstraControllerObject.AddComponent<DijkstraController>();
-
 		this.tiles = initController.getTiles();			
 		this.characters = initController.getCharacters();
 		this.moveOrder = initController.getMoveOrder();
+
+		GameObject dijkstraControllerObject = new GameObject("DijkstraController");
+		this.dijkstra = dijkstraControllerObject.AddComponent<DijkstraController>();
+		dijkstra.setAllTiles(tiles);
 
 		StartCoroutine(executeTurnSystem());
 	}
@@ -37,55 +38,67 @@ public class GameControllerScript : MonoBehaviour
 	// This is the primary loop of the entire game
 	private IEnumerator executeTurnSystem()
 	{
-		foreach (string characterId in moveOrder)
+		bool gameOver = false;
+		while (gameOver == false)
 		{
-			// Grab the character object from the characters dictionary
-			Character currentCharacter = characters[characterId];
-			
-			Renderer currentCharacterRenderer = currentCharacter.getCharacterGameObj().GetComponent<Renderer>();
-			Color originalMaterial = currentCharacterRenderer.material.color;
-			currentCharacterRenderer.material.color = Color.red;
-
-			string selectedMove = "";
-
-			// If the character is dead (hp <= 0), jump to the next in the loop
-			if (currentCharacter.getHp() <= 0)
-				continue;
-
-			// If the character is a wizard or a cleric...
-			if (characterId.StartsWith("wizard") || characterId.StartsWith("cleric"))
+			foreach (string characterId in moveOrder)
 			{
-				// Wait for the player to make a move selection
-				yield return StartCoroutine(getPlayerMoveSelection(currentCharacter, (string selection) =>
-				{
-					// Resume the main thread with the selected move
-					selectedMove = selection;
-				}));
+				// Grab the character object from the characters dictionary
+				Character currentCharacter = characters[characterId];
+				
+				Renderer currentCharacterRenderer = currentCharacter.getCharacterGameObj().GetComponent<Renderer>();
+				Color originalMaterial = currentCharacterRenderer.material.color;
+				currentCharacterRenderer.material.color = Color.red;
 
-				// Perform the selected move
-				if (selectedMove == "movemove")
+				string selectedMove = "";
+
+				// If the character is dead (hp <= 0), jump to the next in the loop
+				if (currentCharacter.getHp() <= 0)
+					continue;
+
+				// If the character is a wizard or a cleric...
+				if (characterId.StartsWith("wizard") || characterId.StartsWith("cleric"))
 				{
-					// yield return StartCoroutine(getPlayerTileInput(currentCharacter, (string location) =>
-					// {
-					// 	print(location);
-					// }));
-					yield return StartCoroutine(executeMoveMove(currentCharacter));
+					// Wait for the player to make a move selection
+					yield return StartCoroutine(getPlayerMoveSelection(currentCharacter, (string selection) =>
+					{
+						// Resume the main thread with the selected move
+						selectedMove = selection;
+					}));
+
+					// Perform the selected move
+					if (selectedMove == "movemove")
+					{
+						// yield return StartCoroutine(getPlayerTileInput(currentCharacter, (string location) =>
+						// {
+						// 	print(location);
+						// }));
+						yield return StartCoroutine(executeMoveMove(currentCharacter));
+					}
+					else if (selectedMove == "attackmove")
+					{
+						// executeAttackMove(currentCharacter);
+					}
+					else if (selectedMove == "moveattack")
+					{
+						// executeMoveAttack(currentCharacter);
+					}
 				}
-				else if (selectedMove == "attackmove")
+				else // else, we know it's AI...
 				{
-					// executeAttackMove(currentCharacter);
+					// executeAiMove(currentCharacter);
 				}
-				else if (selectedMove == "moveattack")
-				{
-					// executeMoveAttack(currentCharacter);
-				}
-			}
-			else // else, we know it's AI...
-			{
-				// executeAiMove(currentCharacter);
+
+				currentCharacterRenderer.material.color = originalMaterial;
 			}
 
-			currentCharacterRenderer.material.color = originalMaterial;
+			// foreach (Character character in characters.Values)
+			// {
+			// 	if (character.getHp() >= 0)
+			// 	{
+			// 		break;
+			// 	}
+			// }
 		}
 	}
 
@@ -119,12 +132,14 @@ public class GameControllerScript : MonoBehaviour
 	// This method just returns the tile location of where they want to move
 	private IEnumerator executeMoveMove(Character currentCharacter)
 	{
-		bool isValidTile = false;
-		List<Tilescript> tilesInRange;
-		tilesInRange = this.dijkstra.getTilesInRange(currentCharacter.getCurrentTile(), currentCharacter.getMovementRange() * 2);
+		bool isValidCoordinate = false;
+		List<Tilescript> tilesInRange = this.dijkstra.getTilesInRange(currentCharacter.getCurrentTile(), 
+																		currentCharacter.getMovementRange() * 2);
+		string coordinate = "";
 		dijkstra.colorTiles(tilesInRange, "red");
-		// while (isValidTile == false)
-		// {
+
+		while (isValidCoordinate == false)
+		{
 			// Instantiate the tileInputOverlay prefabs
 			GameObject tileInputOverlayPrefab = Resources.Load<GameObject>("TileInputOverlay");
 			GameObject tileInputOverlayObject = Instantiate(tileInputOverlayPrefab);
@@ -136,12 +151,17 @@ public class GameControllerScript : MonoBehaviour
 				yield return null;
 			}
 
-			string location = tileInputOverlay.getTileInputString();
-			print(location);
-			// Hide the overlay
+			coordinate = tileInputOverlay.getTileInputString();
+
+			isValidCoordinate = dijkstra.isValidCoordinate(tilesInRange, coordinate);
+
 			tileInputOverlay.hideTileInputOverlay();
 			tileInputOverlay.destroyOverlay();
-		// }
+		}
+
+		Tilescript tileToMove = dijkstra.getTileFromCoordinate(coordinate);
+		
+		currentCharacter.move(tileToMove);
 
 		dijkstra.colorTiles(tilesInRange, "white");
 	}

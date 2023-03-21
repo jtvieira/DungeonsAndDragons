@@ -13,6 +13,15 @@ namespace Characters
 		protected GameObject characterObject;
 		protected Tilescript currentTile;
 		
+		public void move(Tilescript tileToMove)
+		{
+			this.currentTile.hasEntity = false;
+			Vector3 newPosition = tileToMove.transform.position;
+			newPosition.y += 1;
+			this.characterObject.transform.position = newPosition;
+			this.currentTile = tileToMove;
+		}
+
 		public GameObject getCharacterGameObj()
 		{
 			return characterObject;

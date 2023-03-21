@@ -6,7 +6,7 @@ namespace Characters
 {
 	public class Wizard : Character
 	{
-		public void initialize(string id, GameObject wizardGameObj, Tilescript currentTile,float hp)
+		public void initialize(string id, GameObject wizardGameObj, Tilescript currentTile,float hp, int movementRange)
 		{
 			this.id = id;
 			this.characterObject = wizardGameObj;

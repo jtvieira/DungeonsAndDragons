@@ -110,9 +110,10 @@ public class GameControllerScript : MonoBehaviour
 		selectionCallback(selection);
 	}
 
+	// This method just returns the tile location of where they want to move
 	private IEnumerator getPlayerTileInput(Character currentCharacter, Action<string> selectionCallback)
 	{
-		// Instantiate the MoveChoiceOverlay prefab (*** this happens on each turn ***)
+		// Instantiate the tileInputOverlay prefabs
 		GameObject tileInputOverlayPrefab = Resources.Load<GameObject>("TileInputOverlay");
 		GameObject tileInputOverlayObject = Instantiate(tileInputOverlayPrefab);
 
@@ -125,7 +126,7 @@ public class GameControllerScript : MonoBehaviour
 		}
 
 		string location = tileInputOverlay.getTileInputString();
-		
+
 		// Hide the overlay
 		tileInputOverlay.hideTileInputOverlay();
 		tileInputOverlay.destroyOverlay();

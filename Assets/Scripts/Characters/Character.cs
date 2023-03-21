@@ -53,22 +53,3 @@ namespace Characters
 		}
 	}
 }
-
-
-// Attach this script to your game object that contains the grid of characters
-public class CharacterClickHandler : MonoBehaviour {
-    void Update() {
-        if (Input.GetMouseButtonDown(0)) {
-            // RaycastHit hit;
-            // if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit)) {
-            //     // Check if the object we clicked on has a CharacterData script attached
-            //     Character characterData = hit.collider.gameObject.GetComponent<Character>();
-            //     if (characterData != null) {
-            //         // Output the character's data to the console
-            //         Debug.Log("Clicked on character " + characterData.characterName + " with " + characterData.health + " health.");
-            //     }
-            // }
-			print("test");
-        }
-    }
-}

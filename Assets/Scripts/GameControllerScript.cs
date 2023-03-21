@@ -15,6 +15,7 @@ public class GameControllerScript : MonoBehaviour
 	private MoveChoiceOverlay moveChoiceOverlay;
 	private TileInputOverlay tileInputOverlay;
 	private CharacterInfoOverlay characterInfoOverlay;
+	private AiMoveOverlay aiMoveOverlay;
 	private DijkstraController dijkstra;
 
 	bool selectedCharacter = false;
@@ -88,8 +89,7 @@ public class GameControllerScript : MonoBehaviour
 				}
 				else // else, we know it's AI...
 				{
-					// yield return StartCoroutine(executeAi(currentCharacter));
-					executeAi(currentCharacter);
+					yield return StartCoroutine(executeAi(currentCharacter));
 				}
 
 				currentCharacterRenderer.material.color = originalMaterial;
@@ -186,7 +186,7 @@ public class GameControllerScript : MonoBehaviour
 		dijkstra.colorTiles(tilesInRange, "white");
 	}
 
-	private void executeAi(Character currentCharacter)
+	private IEnumerator executeAi(Character currentCharacter)
 	{
 		// ======= find closest good guy ========
 		float closestDistance = 9999999;
@@ -204,12 +204,44 @@ public class GameControllerScript : MonoBehaviour
 				closestCharacter = character;
 			}
 		}
-		// ======= find closest good guy ========
 		// ======================================
+		
+		// ====== find closest tile to the good guy ======
 
+		List<Tilescript> tilesInRange = dijkstra.getTilesInRange(currentCharacter.getCurrentTile(), currentCharacter.getMovementRange());
+		closestDistance = 9999999;
+		Tilescript closestTile = null;
+		foreach (Tilescript tile in tilesInRange)
+		{
+			float distance = Vector3.Distance(tile.transform.position, closestCharacter.getCurrentTile().transform.position);
 
-		// find closest tile to the good guy
+			if (distance < closestDistance && tile.hasEntity == false)
+			{
+				closestDistance = distance;
+				closestTile = tile;
+			}
+		}
+
+		currentCharacter.move(closestTile);
+		// ==============================================
+		
+		// print(currentCharacter.getId() + " - " + closestCharacter.getId() + " - " + closestTile.getCoordinate());
+
 		// if tile is adjacent, attack good guy
+
+		GameObject aiMoveOverlayPrefab = Resources.Load<GameObject>("AiMoveOverlay");
+		GameObject aiMoveOverlayObject = Instantiate(aiMoveOverlayPrefab);
+		this.aiMoveOverlay = aiMoveOverlayObject.GetComponentInChildren<AiMoveOverlay>();
+		this.aiMoveOverlay.setAiMoveResults(currentCharacter.getId() + "'s Results");
+		this.aiMoveOverlay.setAiMoveLocation("Moved to" + closestTile.getCoordinate());
+
+		// Pause the game flow while the button is not clicked
+		while (!this.aiMoveOverlay.isButtonClicked())
+		{
+			yield return null;
+		}
+
+		this.aiMoveOverlay.destroyOverlay();
 	}
 
 	// In update, we check for mouse clicks on the prefab objects

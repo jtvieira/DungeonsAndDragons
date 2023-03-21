@@ -14,8 +14,10 @@ public class GameControllerScript : MonoBehaviour
 
 	private MoveChoiceOverlay moveChoiceOverlay;
 	private TileInputOverlay tileInputOverlay;
-
+	private CharacterInfoOverlay characterInfoOverlay;
 	private DijkstraController dijkstra;
+
+	bool selectedCharacter = false;
 
 	// Start is called before the first frame update
 	void Start()
@@ -45,6 +47,8 @@ public class GameControllerScript : MonoBehaviour
 			{
 				// Grab the character object from the characters dictionary
 				Character currentCharacter = characters[characterId];
+
+				// displayCharacterInfo(currentCharacter);
 				
 				Renderer currentCharacterRenderer = currentCharacter.getCharacterGameObj().GetComponent<Renderer>();
 				Color originalMaterial = currentCharacterRenderer.material.color;
@@ -185,13 +189,27 @@ public class GameControllerScript : MonoBehaviour
 		if (Input.GetMouseButtonDown(0)) {
 			RaycastHit hit;
 			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit)) {
+
 			    // Check if the object we clicked on has a CharacterData script attached
-				Character characterData = hit.collider.gameObject.GetComponent<Character>();
-				if (characterData != null) {
-					// Output the character's data to the console
-					Debug.Log("Clicked on character " + characterData.getId());
+				Character character = hit.collider.gameObject.GetComponent<Character>();
+				if (character != null) {
+					if (selectedCharacter == true)
+						this.characterInfoOverlay.destroyOverlay();
+					
+					displayCharacterInfo(character);
+					selectedCharacter = true;
 				}
 			}
 		}
     }
+
+	// This function just brings up the character info panel with the selected character
+	private void displayCharacterInfo(Character character)
+	{
+		GameObject characterInfoOverlayPrefab = Resources.Load<GameObject>("CharacterInfoOverlay");
+		GameObject characterInfoOverlayObject = Instantiate(characterInfoOverlayPrefab);
+		this.characterInfoOverlay = characterInfoOverlayObject.GetComponentInChildren<CharacterInfoOverlay>();
+		this.characterInfoOverlay.setCharacterChoice(character.getId());
+		this.characterInfoOverlay.setHealth(character.getHp());
+	}
 }

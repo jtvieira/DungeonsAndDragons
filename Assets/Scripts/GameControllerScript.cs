@@ -15,12 +15,17 @@ public class GameControllerScript : MonoBehaviour
 	private MoveChoiceOverlay moveChoiceOverlay;
 	private TileInputOverlay tileInputOverlay;
 
+	private DijkstraController dijkstra;
+
 	// Start is called before the first frame update
 	void Start()
 	{
 		GameObject initControllerObject = new GameObject("InitializationController");
 		InitializationController initController = initControllerObject.AddComponent<InitializationController>();
 		initController.buildGame();
+
+		GameObject dijkstraControllerObject = new GameObject("DijkstraController");
+		this.dijkstra = dijkstraControllerObject.AddComponent<DijkstraController>();
 
 		this.tiles = initController.getTiles();			
 		this.characters = initController.getCharacters();
@@ -60,10 +65,11 @@ public class GameControllerScript : MonoBehaviour
 				// Perform the selected move
 				if (selectedMove == "movemove")
 				{
-					yield return StartCoroutine(getPlayerTileInput(currentCharacter, (string location) =>
-					{
-						print(location);
-					}));
+					// yield return StartCoroutine(getPlayerTileInput(currentCharacter, (string location) =>
+					// {
+					// 	print(location);
+					// }));
+					yield return StartCoroutine(executeMoveMove(currentCharacter));
 				}
 				else if (selectedMove == "attackmove")
 				{
@@ -111,26 +117,32 @@ public class GameControllerScript : MonoBehaviour
 	}
 
 	// This method just returns the tile location of where they want to move
-	private IEnumerator getPlayerTileInput(Character currentCharacter, Action<string> selectionCallback)
+	private IEnumerator executeMoveMove(Character currentCharacter)
 	{
-		// Instantiate the tileInputOverlay prefabs
-		GameObject tileInputOverlayPrefab = Resources.Load<GameObject>("TileInputOverlay");
-		GameObject tileInputOverlayObject = Instantiate(tileInputOverlayPrefab);
+		bool isValidTile = false;
+		List<Tilescript> tilesInRange;
+		tilesInRange = this.dijkstra.getTilesInRange(currentCharacter.getCurrentTile(), currentCharacter.getMovementRange() * 2);
+		dijkstra.colorTiles(tilesInRange, "red");
+		// while (isValidTile == false)
+		// {
+			// Instantiate the tileInputOverlay prefabs
+			GameObject tileInputOverlayPrefab = Resources.Load<GameObject>("TileInputOverlay");
+			GameObject tileInputOverlayObject = Instantiate(tileInputOverlayPrefab);
+			this.tileInputOverlay = tileInputOverlayObject.GetComponentInChildren<TileInputOverlay>();
 
-		this.tileInputOverlay = tileInputOverlayObject.GetComponentInChildren<TileInputOverlay>();
+			// Pause the game flow while the button is not clicked
+			while (!tileInputOverlay.isButtonClicked())
+			{
+				yield return null;
+			}
 
-		// Pause the game flow while the button is not clicked
-		while (!tileInputOverlay.isButtonClicked())
-		{
-			yield return null;
-		}
+			string location = tileInputOverlay.getTileInputString();
+			print(location);
+			// Hide the overlay
+			tileInputOverlay.hideTileInputOverlay();
+			tileInputOverlay.destroyOverlay();
+		// }
 
-		string location = tileInputOverlay.getTileInputString();
-
-		// Hide the overlay
-		tileInputOverlay.hideTileInputOverlay();
-		tileInputOverlay.destroyOverlay();
-
-		selectionCallback(location);
+		dijkstra.colorTiles(tilesInRange, "white");
 	}
 }

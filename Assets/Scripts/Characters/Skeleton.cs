@@ -12,6 +12,7 @@ namespace Characters
 			this.characterObject = skeletonGameObj;
 			this.currentTile = currentTile;
 			this.hp = hp;
+			this.movementRange = movementRange;
 		}
 	}
 }

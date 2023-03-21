@@ -127,11 +127,28 @@ public class DijkstraController : MonoBehaviour
 			foreach (Tilescript tile in newTiles)
 			{
 				tilesInRange.Add(tile);
-				tile.setColor(Color.red * 3);
 			}
 		}
 
 		return tilesInRange;
 	}
 
+	public void colorTiles(List<Tilescript> tilesToColor, string colorString)
+	{
+		if (colorString == "red")
+		{
+			foreach (Tilescript tile in tilesToColor)
+			{
+				tile.setColor(Color.red * 3);
+			}
+		}
+		else if (colorString == "white")
+		{
+			foreach (Tilescript tile in tilesToColor)
+			{
+				tile.setColor(Color.white * 3);
+			}
+		}
+
+	}
 }

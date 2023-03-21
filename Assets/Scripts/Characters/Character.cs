@@ -28,9 +28,19 @@ namespace Characters
 			return this.hp;
 		}
 
+		public int getMovementRange()
+		{
+			return this.movementRange;
+		}
+
 		public void setCurrentTile(Tilescript currentTile)
 		{
 			this.currentTile = currentTile;
+		}
+
+		public Tilescript getCurrentTile()
+		{
+			return this.currentTile;
 		}
 	}
 }

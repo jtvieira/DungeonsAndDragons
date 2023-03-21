@@ -12,6 +12,7 @@ namespace Characters
 			this.characterObject = wizardGameObj;
 			this.currentTile = currentTile;
 			this.hp = hp;
+			this.movementRange = movementRange;
 		}
 	}
 }

@@ -66,6 +66,6 @@ public class MoveChoiceOverlay : MonoBehaviour
 
 	public void destroyOverlay()
 	{
-		Destroy(gameObject);
+		Destroy(transform.parent.gameObject);
 	}
 }

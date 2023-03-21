@@ -24,7 +24,7 @@ public class GameControllerScript : MonoBehaviour
 		InitializationController initController = initControllerObject.AddComponent<InitializationController>();
 		initController.buildGame();
 
-		this.tiles = initController.getTiles();			
+		this.tiles = initController.getTiles();
 		this.characters = initController.getCharacters();
 		this.moveOrder = initController.getMoveOrder();
 
@@ -69,19 +69,17 @@ public class GameControllerScript : MonoBehaviour
 					// Perform the selected move
 					if (selectedMove == "movemove")
 					{
-						// yield return StartCoroutine(getPlayerTileInput(currentCharacter, (string location) =>
-						// {
-						// 	print(location);
-						// }));
-						yield return StartCoroutine(executeMoveMove(currentCharacter));
+						yield return StartCoroutine(executeMove(currentCharacter, selectedMove));
 					}
 					else if (selectedMove == "attackmove")
 					{
-						// executeAttackMove(currentCharacter);
+						// executeAttac(currentCharacter);
+						yield return StartCoroutine(executeMove(currentCharacter, selectedMove));
 					}
 					else if (selectedMove == "moveattack")
 					{
-						// executeMoveAttack(currentCharacter);
+						// execute	Attack(currentCharacter);
+						yield return StartCoroutine(executeMove(currentCharacter, selectedMove));
 					}
 				}
 				else // else, we know it's AI...
@@ -92,13 +90,21 @@ public class GameControllerScript : MonoBehaviour
 				currentCharacterRenderer.material.color = originalMaterial;
 			}
 
-			// foreach (Character character in characters.Values)
-			// {
-			// 	if (character.getHp() >= 0)
-			// 	{
-			// 		break;
-			// 	}
-			// }
+			int charactersAlive = 0;
+			foreach (Character character in characters.Values)
+			{
+				if (character.getHp() >= 0)
+				{
+					charactersAlive += 1;
+					if (charactersAlive > 1)
+						break;
+				}
+			}
+
+			if (charactersAlive == 1)
+			{
+				gameOver = true; 
+			}
 		}
 	}
 
@@ -130,20 +136,28 @@ public class GameControllerScript : MonoBehaviour
 	}
 
 	// This method just returns the tile location of where they want to move
-	private IEnumerator executeMoveMove(Character currentCharacter)
+	private IEnumerator executeMove(Character currentCharacter, string moveType)
 	{
+		List<Tilescript> tilesInRange = null;
+		if (moveType == "movemove")
+			tilesInRange = this.dijkstra.getTilesInRange(currentCharacter.getCurrentTile(), currentCharacter.getMovementRange() * 2);
+		else if (moveType == "moveattack" || moveType == "attackmove")
+			tilesInRange = this.dijkstra.getTilesInRange(currentCharacter.getCurrentTile(), currentCharacter.getMovementRange());
+
 		bool isValidCoordinate = false;
-		List<Tilescript> tilesInRange = this.dijkstra.getTilesInRange(currentCharacter.getCurrentTile(), 
-																		currentCharacter.getMovementRange() * 2);
 		string coordinate = "";
 		dijkstra.colorTiles(tilesInRange, "red");
 
+		bool firstIteration = true; // for controlling error label
 		while (isValidCoordinate == false)
 		{
 			// Instantiate the tileInputOverlay prefabs
 			GameObject tileInputOverlayPrefab = Resources.Load<GameObject>("TileInputOverlay");
 			GameObject tileInputOverlayObject = Instantiate(tileInputOverlayPrefab);
 			this.tileInputOverlay = tileInputOverlayObject.GetComponentInChildren<TileInputOverlay>();
+
+			if (isValidCoordinate == false && !firstIteration)
+				tileInputOverlay.showBadMove();
 
 			// Pause the game flow while the button is not clicked
 			while (!tileInputOverlay.isButtonClicked())
@@ -157,6 +171,7 @@ public class GameControllerScript : MonoBehaviour
 
 			tileInputOverlay.hideTileInputOverlay();
 			tileInputOverlay.destroyOverlay();
+			firstIteration = false;
 		}
 
 		Tilescript tileToMove = dijkstra.getTileFromCoordinate(coordinate);

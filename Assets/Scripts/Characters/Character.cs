@@ -16,6 +16,7 @@ namespace Characters
 		public void move(Tilescript tileToMove)
 		{
 			this.currentTile.hasEntity = false;
+			tileToMove.hasEntity = true;
 			Vector3 newPosition = tileToMove.transform.position;
 			newPosition.y += 1;
 			this.characterObject.transform.position = newPosition;

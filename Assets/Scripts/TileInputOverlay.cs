@@ -5,6 +5,7 @@ using TMPro;
 public class TileInputOverlay : MonoBehaviour
 {
 	public RectTransform panelRectTransform;
+	public TextMeshProUGUI badMove;
 	public TMP_InputField tileInput;
 	private string tileInputString;
 	private bool buttonClicked = false;
@@ -12,6 +13,7 @@ public class TileInputOverlay : MonoBehaviour
 	// This ensures the RectTransform object is not null when the class instantiates
 	private void Awake()
 	{
+		badMove.enabled = false;
 		if (panelRectTransform == null)
 		{
 			panelRectTransform = transform.GetChild(0).GetComponent<RectTransform>();
@@ -30,7 +32,7 @@ public class TileInputOverlay : MonoBehaviour
 
 	public void tileInputButton()
 	{
-		this.tileInputString = tileInput.text;
+		this.tileInputString = tileInput.text.ToUpper();
 		if (tileInputString != null)
 		{
 			this.buttonClicked = true;
@@ -49,6 +51,16 @@ public class TileInputOverlay : MonoBehaviour
 
 	public void destroyOverlay()
 	{
-		Destroy(gameObject);
+		Destroy(transform.parent.gameObject);
+	}
+
+	public void showBadMove()
+	{
+		this.badMove.enabled = true;
+	}
+
+	public void hideBadMove()
+	{
+		this.badMove.enabled = false;
 	}
 }

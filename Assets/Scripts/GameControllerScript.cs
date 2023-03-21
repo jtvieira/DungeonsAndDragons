@@ -180,4 +180,18 @@ public class GameControllerScript : MonoBehaviour
 
 		dijkstra.colorTiles(tilesInRange, "white");
 	}
+
+	void Update() {
+		if (Input.GetMouseButtonDown(0)) {
+			RaycastHit hit;
+			if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit)) {
+			    // Check if the object we clicked on has a CharacterData script attached
+				Character characterData = hit.collider.gameObject.GetComponent<Character>();
+				if (characterData != null) {
+					// Output the character's data to the console
+					Debug.Log("Clicked on character " + characterData.getId());
+				}
+			}
+		}
+    }
 }

@@ -185,6 +185,7 @@ public class GameControllerScript : MonoBehaviour
 		dijkstra.colorTiles(tilesInRange, "white");
 	}
 
+	// In update, we check for mouse clicks on the prefab objects
 	void Update() {
 		if (Input.GetMouseButtonDown(0)) {
 			RaycastHit hit;

@@ -88,7 +88,8 @@ public class GameControllerScript : MonoBehaviour
 				}
 				else // else, we know it's AI...
 				{
-					// executeAiMove(currentCharacter);
+					// yield return StartCoroutine(executeAi(currentCharacter));
+					executeAi(currentCharacter);
 				}
 
 				currentCharacterRenderer.material.color = originalMaterial;
@@ -183,6 +184,11 @@ public class GameControllerScript : MonoBehaviour
 		currentCharacter.move(tileToMove);
 
 		dijkstra.colorTiles(tilesInRange, "white");
+	}
+
+	private void executeAi(Character currentCharacter)
+	{
+		
 	}
 
 	// In update, we check for mouse clicks on the prefab objects

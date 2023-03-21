@@ -9,7 +9,6 @@ namespace Characters
 		protected string id;
 		protected float hp;
 		protected int movementRange;
-		protected Vector3 position;
 		protected GameObject characterObject;
 		protected Tilescript currentTile;
 		

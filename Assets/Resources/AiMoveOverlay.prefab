@@ -369,6 +369,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3dd5ba9c3ca9af48b3f10f98be6925a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  panelRectTransform: {fileID: 0}
+  AiMoveResults: {fileID: 5974677375171728155}
+  AiMoveLocation: {fileID: 5311651485306136995}
+  AiAttackResults: {fileID: 4640071337864034168}
 --- !u!1 &1935120925714036339
 GameObject:
   m_ObjectHideFlags: 0

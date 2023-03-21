@@ -188,7 +188,28 @@ public class GameControllerScript : MonoBehaviour
 
 	private void executeAi(Character currentCharacter)
 	{
-		
+		// ======= find closest good guy ========
+		float closestDistance = 9999999;
+		Character closestCharacter = null;
+		Vector3 currentCharacterPosition = currentCharacter.getCharacterGameObj().transform.position;
+		foreach (Character character in characters.Values)
+		{
+			if (character.getId().StartsWith("skeleton") || character.getId().StartsWith("war"))
+				break;
+			
+			float distance = Vector3.Distance(currentCharacterPosition, character.getCharacterGameObj().transform.position);
+			if (distance < closestDistance)
+			{
+				closestDistance = distance;
+				closestCharacter = character;
+			}
+		}
+		// ======= find closest good guy ========
+		// ======================================
+
+
+		// find closest tile to the good guy
+		// if tile is adjacent, attack good guy
 	}
 
 	// In update, we check for mouse clicks on the prefab objects

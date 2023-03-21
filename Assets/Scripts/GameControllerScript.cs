@@ -13,6 +13,7 @@ public class GameControllerScript : MonoBehaviour
 	private List<string> moveOrder;
 
 	private MoveChoiceOverlay moveChoiceOverlay;
+	private TileInputOverlay tileInputOverlay;
 
 	// Start is called before the first frame update
 	void Start()
@@ -50,19 +51,19 @@ public class GameControllerScript : MonoBehaviour
 			if (characterId.StartsWith("wizard") || characterId.StartsWith("cleric"))
 			{
 				// Wait for the player to make a move selection
-				yield return StartCoroutine(GetPlayerMoveSelection(currentCharacter, (string selection) =>
+				yield return StartCoroutine(getPlayerMoveSelection(currentCharacter, (string selection) =>
 				{
-					// Handle the user's selection
-					print($"Player selected: {selection}");
-
 					// Resume the main thread with the selected move
-					string selectedMove = selection;
+					selectedMove = selection;
 				}));
 
 				// Perform the selected move
 				if (selectedMove == "movemove")
 				{
-					// executeMoveMove(currentCharacter);
+					yield return StartCoroutine(getPlayerTileInput(currentCharacter, (string location) =>
+					{
+						print(location);
+					}));
 				}
 				else if (selectedMove == "attackmove")
 				{
@@ -82,7 +83,8 @@ public class GameControllerScript : MonoBehaviour
 		}
 	}
 
-	private IEnumerator GetPlayerMoveSelection(Character characterPlayer, Action<string> selectionCallback)
+	// This method simply grabs the users choice for their move (MM, AM, MA)
+	private IEnumerator getPlayerMoveSelection(Character characterPlayer, Action<string> selectionCallback)
 	{
 		// Instantiate the MoveChoiceOverlay prefab (*** this happens on each turn ***)
 		GameObject moveChoiceOverlayPrefab = Resources.Load<GameObject>("MoveChoiceOverlay");
@@ -106,5 +108,28 @@ public class GameControllerScript : MonoBehaviour
 
 		// Pass the result of the button press (selection made by the user) back to executePlayerMove() method for handling
 		selectionCallback(selection);
+	}
+
+	private IEnumerator getPlayerTileInput(Character currentCharacter, Action<string> selectionCallback)
+	{
+		// Instantiate the MoveChoiceOverlay prefab (*** this happens on each turn ***)
+		GameObject tileInputOverlayPrefab = Resources.Load<GameObject>("TileInputOverlay");
+		GameObject tileInputOverlayObject = Instantiate(tileInputOverlayPrefab);
+
+		this.tileInputOverlay = tileInputOverlayObject.GetComponentInChildren<TileInputOverlay>();
+
+		// Pause the game flow while the button is not clicked
+		while (!tileInputOverlay.isButtonClicked())
+		{
+			yield return null;
+		}
+
+		string location = tileInputOverlay.getTileInputString();
+		
+		// Hide the overlay
+		tileInputOverlay.hideTileInputOverlay();
+		tileInputOverlay.destroyOverlay();
+
+		selectionCallback(location);
 	}
 }

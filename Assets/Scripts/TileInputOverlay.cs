@@ -7,6 +7,7 @@ public class TileInputOverlay : MonoBehaviour
 	public RectTransform panelRectTransform;
 	public TMP_InputField tileInput;
 	private string tileInputString;
+	private bool buttonClicked = false;
 
 	// This ensures the RectTransform object is not null when the class instantiates
 	private void Awake()
@@ -29,19 +30,21 @@ public class TileInputOverlay : MonoBehaviour
 
 	public void tileInputButton()
 	{
-		// if (tileInput.text is valid input) - **Taylor** check for validity here :)
+		this.tileInputString = tileInput.text;
+		if (tileInputString != null)
 		{
-			this.tileInputString = tileInput.text;
-			if (tileInputString != null)
-			{
-				print(tileInputString);
-			}
-			hideTileInputOverlay();
+			this.buttonClicked = true;
 		}
-		// else
-		{
-			// present error message on menu
-		} 
+	}
+
+	public string getTileInputString()
+	{
+		return tileInputString;
+	}
+
+	public bool isButtonClicked()
+	{
+		return buttonClicked;
 	}
 
 	public void destroyOverlay()

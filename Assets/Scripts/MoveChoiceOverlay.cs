@@ -35,21 +35,18 @@ public class MoveChoiceOverlay : MonoBehaviour
 	{
 		this.selection = "movemove";
 		this.buttonClicked = true;
-		hideMoveChoiceOverlay();
 	}
 
 	public void attackMoveButton()
 	{
 		this.selection = "attackmove";
 		this.buttonClicked = true;
-		hideMoveChoiceOverlay();
 	}
 
 	public void moveAttackButton()
 	{
 		this.selection = "moveattack";
 		this.buttonClicked = true;
-		hideMoveChoiceOverlay();
 	}
 
 	public string getSelection()

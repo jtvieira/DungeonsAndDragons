@@ -48,8 +48,6 @@ public class GameControllerScript : MonoBehaviour
 			{
 				// Grab the character object from the characters dictionary
 				Character currentCharacter = characters[characterId];
-
-				// displayCharacterInfo(currentCharacter);
 				
 				Renderer currentCharacterRenderer = currentCharacter.getCharacterGameObj().GetComponent<Renderer>();
 				Color originalMaterial = currentCharacterRenderer.material.color;
@@ -95,21 +93,19 @@ public class GameControllerScript : MonoBehaviour
 				currentCharacterRenderer.material.color = originalMaterial;
 			}
 
-			int charactersAlive = 0;
+			int goodCharactersAlive = 0;
+			int badCharactersAlive = 0;
 			foreach (Character character in characters.Values)
 			{
-				if (character.getHp() >= 0)
-				{
-					charactersAlive += 1;
-					if (charactersAlive > 1)
-						break;
-				}
+				string id = character.getId();
+				if ((id.StartsWith("wizard") || id.StartsWith("cleric")) && character.getHp() >= 0)
+					goodCharactersAlive += 1;
+				else if ((id.StartsWith("skeleton") || id.StartsWith("war")) && character.getHp() >= 0)
+					badCharactersAlive += 1;
 			}
 
-			if (charactersAlive == 1)
-			{
-				gameOver = true; 
-			}
+			if (goodCharactersAlive == 0 || badCharactersAlive == 0)
+				gameOver = true;
 		}
 	}
 
@@ -225,15 +221,33 @@ public class GameControllerScript : MonoBehaviour
 		currentCharacter.move(closestTile);
 		// ==============================================
 		
-		// print(currentCharacter.getId() + " - " + closestCharacter.getId() + " - " + closestTile.getCoordinate());
-
+		string attack = "";
 		// if tile is adjacent, attack good guy
+		if (Vector3.Distance(closestCharacter.getCharacterGameObj().transform.position, closestTile.transform.position) < 1.5f)
+		{
+			int hitDiceRoll = UnityEngine.Random.Range(1, 21);
+			
+			if (hitDiceRoll + 3 > closestCharacter.getArmorScore())
+			{
+				// print(currentCharacter.getId() + " dice roll + 3 = " + hitDiceRoll + " against " + closestCharacter.getId() + " armor of " + closestCharacter.getArmorScore() );
+				int damageRoll = UnityEngine.Random.Range(1, 12);
+				int temp = hitDiceRoll + 3;
+				attack = "The attack hit (1d20 + 3 = " + temp + ") against " + closestCharacter.getId() + " for (1d12 = " + damageRoll + ") damage!";  
+				closestCharacter.takeDamage(damageRoll);
+			}
+			else
+			{
+				attack = "The attack missed" + closestCharacter.getId();
+			}
+		}
+		
 
 		GameObject aiMoveOverlayPrefab = Resources.Load<GameObject>("AiMoveOverlay");
 		GameObject aiMoveOverlayObject = Instantiate(aiMoveOverlayPrefab);
 		this.aiMoveOverlay = aiMoveOverlayObject.GetComponentInChildren<AiMoveOverlay>();
 		this.aiMoveOverlay.setAiMoveResults(currentCharacter.getId() + "'s Results");
-		this.aiMoveOverlay.setAiMoveLocation("Moved to" + closestTile.getCoordinate());
+		this.aiMoveOverlay.setAiMoveLocation("Moved to: " + closestTile.getCoordinate());
+		this.aiMoveOverlay.setAiAttackResults(attack);
 
 		// Pause the game flow while the button is not clicked
 		while (!this.aiMoveOverlay.isButtonClicked())

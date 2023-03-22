@@ -51,5 +51,26 @@ namespace Characters
 		{
 			return this.currentTile;
 		}
+
+		public void takeDamage(float damage)
+		{
+			this.hp = this.hp - damage;
+
+			if (this.hp <= 0)
+			{
+				die();
+			}
+		}
+
+		public void die()
+		{
+			this.currentTile.hasEntity = false;
+			Destroy(gameObject);
+		}
+
+		public virtual int getArmorScore()
+		{
+			return -9999;
+		}
 	}
 }

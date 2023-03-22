@@ -14,5 +14,11 @@ namespace Characters
 			this.hp = hp;
 			this.movementRange = movementRange;
 		}
+
+		// wizards can have studded leather armor (12)
+		public override int getArmorScore()
+		{
+			return 12;
+		}
 	}
 }

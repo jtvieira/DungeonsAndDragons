@@ -8,11 +8,20 @@ namespace Characters
 	{
 		public void initialize(string id, GameObject wizardGameObj, Tilescript currentTile,float hp, int movementRange)
 		{
+			this.listOfSpells = "Magic Missle\nScorching Ray\nScorching Ray\n4: Ray of Frost ∞\n5: Fire Bolt ∞";
 			this.id = id;
 			this.characterObject = wizardGameObj;
 			this.currentTile = currentTile;
 			this.hp = hp;
 			this.movementRange = movementRange;
+
+			addSpell(new FireBolt());       //Add spells into List
+			addSpell(new RayOfFrost());
+			addSpell(new MagicMissile());
+			addSpell(new MagicMissile());
+			addSpell(new ScorchingRay());
+			addSpell(new ScorchingRay());
+			addSpell(new ScorchingRay());
 		}
 
 		// wizards can have studded leather armor (12)

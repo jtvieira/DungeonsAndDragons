@@ -16,6 +16,7 @@ public class GameControllerScript : MonoBehaviour
 	private TileInputOverlay tileInputOverlay;
 	private CharacterInfoOverlay characterInfoOverlay;
 	private AiMoveOverlay aiMoveOverlay;
+	private AttackMoveOverlay attackOverlay;
 	private DijkstraController dijkstra;
 
 	bool selectedCharacter = false;
@@ -77,12 +78,14 @@ public class GameControllerScript : MonoBehaviour
 					else if (selectedMove == "attackmove")
 					{
 						// executeAttac(currentCharacter);
+						yield return StartCoroutine(executeAttack(currentCharacter));
 						yield return StartCoroutine(executeMove(currentCharacter, selectedMove));
 					}
 					else if (selectedMove == "moveattack")
 					{
 						// execute	Attack(currentCharacter);
 						yield return StartCoroutine(executeMove(currentCharacter, selectedMove));
+						yield return StartCoroutine(executeAttack(currentCharacter));
 					}
 				}
 				else // else, we know it's AI...
@@ -256,6 +259,53 @@ public class GameControllerScript : MonoBehaviour
 		}
 
 		this.aiMoveOverlay.destroyOverlay();
+	}
+
+	//start of attack move overlay
+	private IEnumerator executeAttack(Character currentCharacter)
+	{
+		GameObject attackOverlayPrefab = Resources.Load<GameObject>("AttackOverlay");
+		GameObject attackOverlayObject = Instantiate(attackOverlayPrefab);
+		this.attackOverlay = attackOverlayObject.GetComponentInChildren<AttackMoveOverlay>();
+
+		//get spells
+		this.attackOverlay.setSpellList(currentCharacter.getSpells());
+		this.attackOverlay.setSpellsAvaliable(currentCharacter.getSpellCount());
+
+		//===================================================================================
+		//spell input and valdation
+		// Pause the game flow while the button is not clicked
+
+		// Get the result of the button press (selection made by the user)
+		string spellInput;
+
+		while (!this.attackOverlay.isButton3Clicked())
+		{
+			yield return null;
+		}
+
+		//check if valid spell
+		if (this.attackOverlay.isButton3Clicked())
+        {
+			spellInput = attackOverlay.getSpellInputString();
+
+			if (!currentCharacter.isValidSpell(spellInput))
+			{
+				this.attackOverlay.showBadSpell();
+			}
+			else
+				this.attackOverlay.showGoodSpell();
+		}
+
+		//===================================================================================
+
+		// Pause the game flow while the button is not clicked
+		while (!this.attackOverlay.isButtonClicked())
+		{
+			yield return null;
+		}
+
+		this.attackOverlay.destroyOverlay();
 	}
 
 	// In update, we check for mouse clicks on the prefab objects

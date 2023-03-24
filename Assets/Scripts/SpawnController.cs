@@ -64,7 +64,7 @@ public class SpawnController : MonoBehaviour
 
 			GameObject instantiatedObject = Instantiate(wizardObject, spawnPosition, Quaternion.identity);
 			Wizard wizard = instantiatedObject.GetComponent<Wizard>();
-			wizard.initialize("wizard" + i, instantiatedObject, tileToSpawn, 75f, 5);
+			wizard.initialize("wizard" + i, instantiatedObject, tileToSpawn, 75f, 6);
 
 			characterDict.Add("wizard" + i, wizard);
 
@@ -82,7 +82,7 @@ public class SpawnController : MonoBehaviour
 
 			GameObject instantiatedObject = Instantiate(clericObject, spawnPosition, Quaternion.identity);
 			Cleric cleric = instantiatedObject.GetComponent<Cleric>();
-			cleric.initialize("cleric" + i, instantiatedObject, tileToSpawn, 60f, 4);
+			cleric.initialize("cleric" + i, instantiatedObject, tileToSpawn, 60f, 5);
 
 			characterDict.Add("cleric" + i, cleric);
 

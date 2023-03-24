@@ -8,7 +8,7 @@ namespace Characters
 	{
 		public void initialize(string id, GameObject clericGameObj, Tilescript currentTile, float hp, int movementRange)
 		{
-			this.listOfSpells = "Healing Word\nAid\nMass Healing Word";
+			this.listOfSpells = "Healing Word\nAid\nMass Healing Word\n4: Great Axe (infinate)";
 			this.id = id;
 			this.characterObject = clericGameObj;
 			this.currentTile = currentTile;
@@ -21,6 +21,7 @@ namespace Characters
 			addSpell(new Aid());
 			addSpell(new Aid());
 			addSpell(new MassHealingWord());
+			addSpell(new GreatAxe());
 
 			slot1 = 3;
 			slot2 = 2;

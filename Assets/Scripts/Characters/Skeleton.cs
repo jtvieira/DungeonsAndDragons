@@ -14,5 +14,10 @@ namespace Characters
 			this.hp = hp;
 			this.movementRange = movementRange;
 		}
+
+		public override int getArmorScore()
+		{
+			return 11;
+		}
 	}
 }

@@ -76,8 +76,12 @@ namespace Characters
 					slot2--;
 					return true;
 				}
-				//must be wizard
-				if (((input == "4") || (input == "5")) && this.movementRange > 5 )
+				if ((input == "4") && this.movementRange <= 5)
+				{
+					return true;
+				}
+			//must be wizard
+			if (((input == "4") || (input == "5")) && this.movementRange > 5 )
 				{
 					return true;
 				}
@@ -141,6 +145,8 @@ namespace Characters
 				return 12;
 			if ((i == "2" && this.movementRange <= 5))
 				return 6;
+			if ((i == "4" && this.movementRange <= 5))
+				return 1;
 			else
 				return 0;
         }
@@ -169,7 +175,7 @@ namespace Characters
 				float totalRollResult = rollResult1 + rollResult2;
 				return totalRollResult;
 			}
-			if (i == "4")
+			if (i == "4" && this.movementRange > 5)
 			{
 				float rollResult1 = rollDice(10);
 				float rollResult2 = rollDice(10);
@@ -191,9 +197,14 @@ namespace Characters
 			}
 			if (i == "3" && this.movementRange <= 5)
 			{
-				//negative so adds to hp
 				float totalRollResult = rollDice(4);
-				this.hp -= totalRollResult;
+				this.hp += totalRollResult;
+				return totalRollResult;
+			}
+			if (i == "4" && this.movementRange <= 5)
+			{
+				float rollResult1 = rollDice(12);
+				float totalRollResult = rollResult1;
 				return totalRollResult;
 			}
 			if ((i == "2" && this.movementRange <= 5))

@@ -155,7 +155,7 @@ public class AttackMoveOverlay : MonoBehaviour
 		TileInputLabel.enabled = true;
 		spellInput.enabled = false;
 		badMove.enabled = false;
-		closeOverlayButton.gameObject.SetActive(true);
+		badSpell.enabled = false;
 		inputButton.gameObject.SetActive(true);
 		spellButton.gameObject.SetActive(false);
 	}
@@ -182,6 +182,7 @@ public class AttackMoveOverlay : MonoBehaviour
 		inputButton.gameObject.SetActive(false);
 		tileInput.gameObject.SetActive(false);
 		EnterAttackLabel.enabled = false;
+		closeOverlayButton.gameObject.SetActive(true);
 		UserAttackResults.enabled = true;
 		AttackResultsLabel.enabled = true;
 	}

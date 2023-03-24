@@ -312,6 +312,8 @@ public class GameControllerScript : MonoBehaviour
 			}
 		}
 
+		this.attackOverlay.hideBadMove();
+
 		//check to see if move valid for spell
 		string moveSpellLocation = "";
 
@@ -361,7 +363,11 @@ public class GameControllerScript : MonoBehaviour
 			if(curr.getCurrentTile() == tileToAttack && (hitDiceRoll + 3 > curr.getArmorScore()))
             {
 				curr.takeDamage(damage);
-				attack = "The attack hit " + curr.getId() + " for (" + damage + ") damage!";
+				attack = "The attack hit " + curr.getId() + " for (" + damage + ") damage, hp now " + curr.getHp() + "!";
+			}
+			else if (curr.getCurrentTile() == tileToAttack)
+			{
+				attack = "The spell missed, " + currentCharacter.getId() + " rolled a " + hitDiceRoll + ", " + curr.getId() + " armor score = " + curr.getArmorScore();
 			}
 		}
 

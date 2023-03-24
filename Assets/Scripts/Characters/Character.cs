@@ -60,38 +60,20 @@ namespace Characters
 
 		public string getSpellCount()
 		{
-			for (int i = 0; i < Spells.Count; i++)
-			{
-				Spell currSpell = Spells[i];
-				if (currSpell.name == "MagicMissile" || currSpell.name == "HealingWord")
-				{
-					slot1++;
-				}
-				if ((currSpell.name == "ScorchingRay" && slot2 < 2) || currSpell.name == "Aid" )
-				{
-					slot2++;
-				}
-				else if (currSpell.name == "ScorchingRay" || currSpell.name == "MassHealingWord")
-				{
-					slot3++;
-				}
-			}
-
             string returnString = slot1.ToString() + "\n" + slot2.ToString() + "\n" + slot3.ToString();
 			return returnString;
 		}
 
 		public bool isValidSpell(string input)
         {
-			for (int i = 0; i < Spells.Count; i++)
-			{
-				Spell currSpell = Spells[i];
 				if ((input == "1") && (slot1 > 0))
 				{
+					slot1--;
 					return true;
 				}
 				if ((input == "2") && (slot2 > 0))
 				{
+					slot2--;
 					return true;
 				}
 				//must be wizard
@@ -99,34 +81,14 @@ namespace Characters
 				{
 					return true;
 				}
-				else if ((input == "3") && (slot3 > 0))
+				if ((input == "3") && (slot3 > 0))
 				{
+					slot3--;
 					return true;
 				}
-			}
-			return false;
+				else
+					return false;
         }
-
-		/*public void useSpell(string spell)
-		{
-			for (int i = 0; i < Spells.Count; i++)
-			{
-				Spell currSpell = Spells[i];
-				if (currSpell.name == spell && (currSpell.name == "FireBolt" || currSpell.name == "RayOfFrost"))
-				{
-					//Use spell and dont pop off list cause its CANTRIP type spell
-					//Console.WriteLine("Using Spell: " + currSpell.name);
-					break;
-				}
-				else if (currSpell.name == spell && (currSpell.name == "MagicMissile" || currSpell.name == "ScorchingRay")) //if there is an instance of the Spell in the list then use it
-				{
-					//use spell then pop it off the list 
-					//Console.WriteLine("Using Spell: " + currSpell.name);
-					Spells.RemoveAt(i);
-					break;
-				}
-			}
-		}*/
 
 		public void decreaseHealth(Character character, float damage)
 		{
@@ -166,5 +128,78 @@ namespace Characters
 			return -9999;
 		}
 
+		//I just hard coded this stuff- made it easier for me to work faster
+		public int getSpellRange(string i)
+        {
+			//wizard
+			if((i == "1" || i == "2" || i == "3" || i == "4") && this.movementRange > 5)
+				return 24;
+			if (i == "5")
+				return 12;
+			//cleric
+			if ((i == "1" || i == "3") && this.movementRange <= 5)
+				return 12;
+			if ((i == "2" && this.movementRange <= 5))
+				return 6;
+			else
+				return 0;
+        }
+
+		//Other variables
+		static System.Random random = new System.Random(); //This is for the random dice roller
+
+		//Function that rolls specific diceType for spell
+		public static float rollDice(float diceType)
+		{
+			return (float)random.Next(1, (int)diceType + 1);
+		}
+
+		public float getSpellDamage(string i)
+        {
+			//wizard
+			if (i == "1" && this.movementRange > 5)
+            {
+				float totalRollResult = rollDice(4) + 1;
+				return totalRollResult;
+			}
+			if ((i == "2" || i == "3" || i == "4") && this.movementRange > 5)
+			{
+				float rollResult1 = rollDice(6);
+				float rollResult2 = rollDice(6);
+				float totalRollResult = rollResult1 + rollResult2;
+				return totalRollResult;
+			}
+			if (i == "4")
+			{
+				float rollResult1 = rollDice(10);
+				float rollResult2 = rollDice(10);
+				float totalRollResult = rollResult1 + rollResult2;
+				return totalRollResult;
+			}
+			if (i == "5")
+			{
+				float rollResult1 = rollDice(8);
+				float rollResult2 = rollDice(8);
+				float totalRollResult = rollResult1 + rollResult2;
+				return totalRollResult;
+			}
+			//cleric
+			if (i == "1" && this.movementRange <= 5)
+            {
+				float totalRollResult = rollDice(4);
+				return totalRollResult;
+			}
+			if (i == "3" && this.movementRange <= 5)
+			{
+				//negative so adds to hp
+				float totalRollResult = rollDice(4);
+				this.hp -= totalRollResult;
+				return totalRollResult;
+			}
+			if ((i == "2" && this.movementRange <= 5))
+				return 5;
+			else
+				return 0;
+		}
 	}
 }

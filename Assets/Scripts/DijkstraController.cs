@@ -146,6 +146,16 @@ public class DijkstraController : MonoBehaviour
 		return false;
 	}
 
+	public bool isValidCoordinate2(List<Tilescript> tiles, string coordinate)
+	{
+		foreach (Tilescript tile in tiles)
+		{
+			if (coordinate == tile.getCoordinate())
+				return true;
+		}
+		return false;
+	}
+
 	public Tilescript getTileFromCoordinate(string coordinate)
 	{
 		foreach (Tilescript tile in allTiles)

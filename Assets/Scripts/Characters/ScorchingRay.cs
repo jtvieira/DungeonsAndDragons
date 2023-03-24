@@ -4,10 +4,10 @@
     {
         public ScorchingRay()
         {
-            base.name = "ScorchingRay";
-            base.level = "2";
-            base.diceType = 6;  //(2d6)
-            base.range = 24;
+            this.name = "ScorchingRay";
+            this.level = "2";
+            this.diceType = 6;  //(2d6)
+            this.range = 24;
         }
 
         //This function ATTACKS the enemy only if the D20+3 roll > enemy AC level 

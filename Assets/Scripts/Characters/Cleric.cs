@@ -21,6 +21,10 @@ namespace Characters
 			addSpell(new Aid());
 			addSpell(new Aid());
 			addSpell(new MassHealingWord());
+
+			slot1 = 3;
+			slot2 = 2;
+			slot3 = 1;
 		}
 
 		// clerics can have padded leather armor (12)

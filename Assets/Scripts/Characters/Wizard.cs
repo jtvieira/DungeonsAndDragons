@@ -22,6 +22,10 @@ namespace Characters
 			addSpell(new ScorchingRay());
 			addSpell(new ScorchingRay());
 			addSpell(new ScorchingRay());
+
+			slot1 = 2;
+			slot2 = 2;
+			slot3 = 1;
 		}
 
 		// wizards can have studded leather armor (12)

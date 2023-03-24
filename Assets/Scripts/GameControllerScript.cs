@@ -264,38 +264,115 @@ public class GameControllerScript : MonoBehaviour
 	//start of attack move overlay
 	private IEnumerator executeAttack(Character currentCharacter)
 	{
-		GameObject attackOverlayPrefab = Resources.Load<GameObject>("AttackOverlay");
-		GameObject attackOverlayObject = Instantiate(attackOverlayPrefab);
-		this.attackOverlay = attackOverlayObject.GetComponentInChildren<AttackMoveOverlay>();
+		bool invalidSpell = true;
+		bool badSpell = false;
+		string spellInput = "";
 
-		//get spells
-		this.attackOverlay.setSpellList(currentCharacter.getSpells());
-		this.attackOverlay.setSpellsAvaliable(currentCharacter.getSpellCount());
-
-		//===================================================================================
-		//spell input and valdation
-		// Pause the game flow while the button is not clicked
-
-		// Get the result of the button press (selection made by the user)
-		string spellInput;
-
-		while (!this.attackOverlay.isButton3Clicked())
+		while (invalidSpell == true)
 		{
-			yield return null;
-		}
+			GameObject attackOverlayPrefab = Resources.Load<GameObject>("AttackOverlay");
+			GameObject attackOverlayObject = Instantiate(attackOverlayPrefab);
+			this.attackOverlay = attackOverlayObject.GetComponentInChildren<AttackMoveOverlay>();
 
-		//check if valid spell
-		if (this.attackOverlay.isButton3Clicked())
-        {
-			spellInput = attackOverlay.getSpellInputString();
+			//get spells
+			this.attackOverlay.setSpellList(currentCharacter.getSpells());
+			this.attackOverlay.setSpellsAvaliable(currentCharacter.getSpellCount());
+			this.attackOverlay.setPlayer("Attack Move: " + currentCharacter.getId());
 
-			if (!currentCharacter.isValidSpell(spellInput))
-			{
+			if (badSpell)
 				this.attackOverlay.showBadSpell();
+
+			//===================================================================================
+			//spell input and valdation
+			// Pause the game flow while the button is not clicked
+
+			// Get the result of the button press (selection made by the user)
+
+			while (!this.attackOverlay.isButton3Clicked())
+			{
+				yield return null;
 			}
-			else
-				this.attackOverlay.showGoodSpell();
+
+			//check if valid spell
+			if (this.attackOverlay.isButton3Clicked())
+			{
+				spellInput = attackOverlay.getSpellInputString();
+
+				if (!currentCharacter.isValidSpell(spellInput))
+				{
+					this.attackOverlay.destroyOverlay();
+					badSpell = true;
+				}
+				else
+				{
+					this.attackOverlay.showGoodSpell();
+					invalidSpell = false;
+					break;
+				}
+			}
 		}
+
+		//check to see if move valid for spell
+		string moveSpellLocation = "";
+
+		//get valid tiles
+		List<Tilescript> tilesInRangeOfSpell = null;
+		tilesInRangeOfSpell = this.dijkstra.getTilesInRange(currentCharacter.getCurrentTile(), currentCharacter.getSpellRange(spellInput));
+
+		bool isVal = false;
+
+		dijkstra.colorTiles(tilesInRangeOfSpell, "red");
+
+		while (isVal == false)
+		{
+			// Pause the game flow while the button is not clicked
+			while (!this.attackOverlay.isButton2Clicked())
+			{
+				yield return null;
+			}
+
+			if (this.attackOverlay.isButton2Clicked())
+			{
+				moveSpellLocation = attackOverlay.getTileInputString();
+				if(isVal = dijkstra.isValidCoordinate2(tilesInRangeOfSpell, moveSpellLocation))
+                {
+					this.attackOverlay.setValid();
+					isVal = true;
+				}
+				else
+					this.attackOverlay.setinValid();
+			}
+		}
+
+		//use spell!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+		Tilescript tileToAttack = dijkstra.getTileFromCoordinate(moveSpellLocation);
+
+		float damage = currentCharacter.getSpellDamage(spellInput);
+		string attack = "";
+
+		//find character on tile
+		foreach (string characterId in moveOrder)
+		{
+			int hitDiceRoll = UnityEngine.Random.Range(1, 21);
+
+			// Grab the character object from the characters dictionary
+			Character curr = characters[characterId];
+			if(curr.getCurrentTile() == tileToAttack && (hitDiceRoll + 3 > curr.getArmorScore()))
+            {
+				curr.takeDamage(damage);
+				attack = "The attack hit " + curr.getId() + " for (" + damage + ") damage!";
+			}
+		}
+
+		if(attack == "")
+        {
+			attack = "The spell missed";
+		}
+
+		this.attackOverlay.setAttackMoveResults(attack);
+
+		dijkstra.colorTiles(tilesInRangeOfSpell, "white");
 
 		//===================================================================================
 

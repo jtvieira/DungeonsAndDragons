@@ -9,10 +9,11 @@ public class AttackMoveOverlay : MonoBehaviour
 	public TextMeshProUGUI AttackMoveResults;
 	public TextMeshProUGUI TileInputLabel;
 	public TextMeshProUGUI AttackResultsLabel;
-	public TextMeshProUGUI AttackMoveLocation;
+	public TextMeshProUGUI EnterAttackLabel;
 	public TextMeshProUGUI UserAttackResults;
 	public TextMeshProUGUI SpellList;
 	public TextMeshProUGUI SpellsAvaliable;
+	public TextMeshProUGUI playerId;
 	public TextMeshProUGUI SpellsLabel;
 	public TMP_InputField spellInput;
 	public TextMeshProUGUI badSpell;
@@ -33,7 +34,6 @@ public class AttackMoveOverlay : MonoBehaviour
 		badMove.enabled = false;
 		badSpell.enabled = false;
 		AttackMoveResults.enabled = false;
-		AttackMoveLocation.enabled = false;
 		UserAttackResults.enabled = false;
 		tileInput.gameObject.SetActive(false);
 		TileInputLabel.enabled = false;
@@ -41,12 +41,13 @@ public class AttackMoveOverlay : MonoBehaviour
 		closeOverlayButton.gameObject.SetActive(false);
 		inputButton.gameObject.SetActive(false);
 
+		inputButton.onClick.AddListener(TaskOnClick);
+
 		if (panelRectTransform == null)
 		{
 			panelRectTransform = transform.GetChild(0).GetComponent<RectTransform>();
 		}
 	}
-
 
 	private void showAttackMoveOverlay()
 	{
@@ -56,6 +57,11 @@ public class AttackMoveOverlay : MonoBehaviour
 	public void hideAttackMoveOverlay()
 	{
 		panelRectTransform.gameObject.SetActive(false);
+	}
+
+	public void setPlayer(string newString)
+	{
+		this.playerId.text = newString;
 	}
 
 	public void setSpellList(string newString)
@@ -88,11 +94,6 @@ public class AttackMoveOverlay : MonoBehaviour
 		this.AttackMoveResults.text = newString;
 	}
 
-	public void setMoveLocation(string newString)
-	{
-		this.AttackMoveLocation.text = newString;
-	}
-
 	public void setAttackResults(string newString)
 	{
 		this.UserAttackResults.text = newString;
@@ -100,11 +101,13 @@ public class AttackMoveOverlay : MonoBehaviour
 
 	public void tileInputButton()
 	{
+	}
+
+	void TaskOnClick()
+	{
 		this.tileInputString = tileInput.text.ToUpper();
-		if (tileInputString != null)
-		{
-			this.button2Clicked = true;
-		}
+		setTileInputString(this.tileInputString);
+		this.button2Clicked = true;
 	}
 
 	public void spellInputButton()
@@ -114,6 +117,11 @@ public class AttackMoveOverlay : MonoBehaviour
 		{
 			this.button3Clicked = true;
 		}
+	}
+
+	public void setTileInputString(String tile)
+	{
+		this.tileInputString = tile;
 	}
 
 	public string getTileInputString()
@@ -143,12 +151,8 @@ public class AttackMoveOverlay : MonoBehaviour
 
 	public void showGoodSpell()
 	{
-		AttackMoveResults.enabled = true;
-		AttackMoveLocation.enabled = true;
-		UserAttackResults.enabled = true;
 		tileInput.gameObject.SetActive(true);
 		TileInputLabel.enabled = true;
-		AttackResultsLabel.enabled = true;
 		spellInput.enabled = false;
 		badMove.enabled = false;
 		closeOverlayButton.gameObject.SetActive(true);
@@ -169,5 +173,24 @@ public class AttackMoveOverlay : MonoBehaviour
 	public string getSpellInputString()
 	{
 		return spellInputString;
+	}
+
+	public void setValid()
+    {
+		badMove.enabled = false;
+		AttackMoveResults.enabled = true;
+		inputButton.gameObject.SetActive(false);
+		tileInput.gameObject.SetActive(false);
+		EnterAttackLabel.enabled = false;
+		UserAttackResults.enabled = true;
+		AttackResultsLabel.enabled = true;
+	}
+
+	public void setinValid()
+	{
+		badMove.enabled = true;
+		inputButton.gameObject.SetActive(true);
+		tileInput.gameObject.SetActive(true);
+		this.button2Clicked = false;
 	}
 }

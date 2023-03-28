@@ -1287,26 +1287,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 4001631837413476395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f20af5b8365044899a00c6c6963d4d15, type: 3}
+  m_Script: {fileID: 11500000, guid: 5732fa301bbfc46beaa0600c777eb18a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelRectTransform: {fileID: 7236780683762489288}
-  AttackMoveResults: {fileID: 1271166355038134420}
-  TileInputLabel: {fileID: 8077233086575244655}
+  panelRectTransform: {fileID: 0}
+  AttackMoveResults: {fileID: 0}
+  TileInputLabel: {fileID: 0}
   AttackResultsLabel: {fileID: 1271166355038134420}
-  EnterAttackLabel: {fileID: 8077233086575244655}
-  UserAttackResults: {fileID: 7172303492491483068}
+  EnterAttackLabel: {fileID: 0}
+  UserAttackResults: {fileID: 0}
   SpellList: {fileID: 2228100642467796133}
-  SpellsAvaliable: {fileID: 1780277777213270992}
-  playerId: {fileID: 4476906232803130105}
-  SpellsLabel: {fileID: 8963817870931558636}
-  spellInput: {fileID: 3817711379128470559}
+  SpellsAvaliable: {fileID: 0}
+  playerId: {fileID: 0}
+  SpellsLabel: {fileID: 0}
+  spellInput: {fileID: 0}
   badSpell: {fileID: 368788216774509251}
-  inputButton: {fileID: 241622886586740361}
-  closeOverlayButton: {fileID: 7447250645031604842}
-  spellButton: {fileID: 9184417414628950121}
+  inputButton: {fileID: 0}
+  closeOverlayButton: {fileID: 0}
+  spellButton: {fileID: 0}
   badMove: {fileID: 4758139909607611018}
-  tileInput: {fileID: 8719206924724099259}
+  tileInput: {fileID: 0}
 --- !u!1 &4098814760885372241
 GameObject:
   m_ObjectHideFlags: 0

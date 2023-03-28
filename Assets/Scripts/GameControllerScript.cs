@@ -4,6 +4,7 @@ using UnityEngine;
 using Characters;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameControllerScript : MonoBehaviour
 {
@@ -110,6 +111,7 @@ public class GameControllerScript : MonoBehaviour
 			if (goodCharactersAlive == 0 || badCharactersAlive == 0)
 				gameOver = true;
 		}
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 	}
 
 	// This method simply grabs the users choice for their move (MM, AM, MA)

@@ -20,17 +20,35 @@ public class AttackMoveOverlay : MonoBehaviour
 	public Button inputButton;
 	public Button closeOverlayButton;
 	public Button spellButton;
-	private bool button1Clicked = false;
 	public TextMeshProUGUI badMove;
 	public TMP_InputField tileInput;
 	private string tileInputString;
+	private bool button1Clicked = false;
 	private string spellInputString = null;
 	private bool button2Clicked = false;
 	private bool button3Clicked = false;
 
 	// This ensures the RectTransform object is not null when the class instantiates
 	private void Awake()
-	{
+	{// Get references to UI elements and assign them to AttackMoveOverlay variables
+	Debug.Log("here");
+        // this.panelRectTransform = transform.Find("AttackPanel").GetComponent<RectTransform>();
+        this.AttackMoveResults = transform.Find("AttackResultsLabel").GetComponent<TextMeshProUGUI>();
+        this.TileInputLabel = transform.Find("TileInputLabel").GetComponent<TextMeshProUGUI>();
+        this.AttackResultsLabel = transform.Find("AttackResultsLabel").GetComponent<TextMeshProUGUI>();
+        this.EnterAttackLabel = transform.Find("TileInputLabel").GetComponent<TextMeshProUGUI>();
+        this.UserAttackResults = transform.Find("UserAttackResult").GetComponent<TextMeshProUGUI>();
+        this.SpellList = transform.Find("SpellList").GetComponent<TextMeshProUGUI>();
+        this.SpellsAvaliable = transform.Find("SpellAvaliable").GetComponent<TextMeshProUGUI>();
+        this.playerId = transform.Find("PlayerId").GetComponent<TextMeshProUGUI>();
+        this.SpellsLabel = transform.Find("SpellLabel").GetComponent<TextMeshProUGUI>();
+        this.spellInput = transform.Find("SpellInput").GetComponent<TMP_InputField>();
+        // this.badSpell = transform.Find("BadSpellLabel").GetComponent<TextMeshProUGUI>();
+        this.inputButton = transform.Find("TileInputButton").GetComponent<Button>();
+        this.closeOverlayButton = transform.Find("AttackMoveOkay").GetComponent<Button>();
+        this.spellButton = transform.Find("SpellButton").GetComponent<Button>();
+        // this.badMove = transform.Find("BadMoveLabel").GetComponent<TextMeshProUGUI>();
+        this.tileInput = transform.Find("TileInput").GetComponent<TMP_InputField>();
 		badMove.enabled = false;
 		badSpell.enabled = false;
 		AttackMoveResults.enabled = false;

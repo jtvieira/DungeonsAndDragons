@@ -30,9 +30,7 @@ public class AttackMoveOverlay : MonoBehaviour
 
 	// This ensures the RectTransform object is not null when the class instantiates
 	private void Awake()
-	{// Get references to UI elements and assign them to AttackMoveOverlay variables
-	Debug.Log("here");
-        // this.panelRectTransform = transform.Find("AttackPanel").GetComponent<RectTransform>();
+	{
         this.AttackMoveResults = transform.Find("AttackResultsLabel").GetComponent<TextMeshProUGUI>();
         this.TileInputLabel = transform.Find("TileInputLabel").GetComponent<TextMeshProUGUI>();
         this.AttackResultsLabel = transform.Find("AttackResultsLabel").GetComponent<TextMeshProUGUI>();
@@ -43,12 +41,11 @@ public class AttackMoveOverlay : MonoBehaviour
         this.playerId = transform.Find("PlayerId").GetComponent<TextMeshProUGUI>();
         this.SpellsLabel = transform.Find("SpellLabel").GetComponent<TextMeshProUGUI>();
         this.spellInput = transform.Find("SpellInput").GetComponent<TMP_InputField>();
-        // this.badSpell = transform.Find("BadSpellLabel").GetComponent<TextMeshProUGUI>();
         this.inputButton = transform.Find("TileInputButton").GetComponent<Button>();
         this.closeOverlayButton = transform.Find("AttackMoveOkay").GetComponent<Button>();
         this.spellButton = transform.Find("SpellButton").GetComponent<Button>();
-        // this.badMove = transform.Find("BadMoveLabel").GetComponent<TextMeshProUGUI>();
         this.tileInput = transform.Find("TileInput").GetComponent<TMP_InputField>();
+
 		badMove.enabled = false;
 		badSpell.enabled = false;
 		AttackMoveResults.enabled = false;

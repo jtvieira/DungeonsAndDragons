@@ -193,19 +193,19 @@ namespace Characters
 			if (i == "1" && this.movementRange <= 5)
             {
 				float totalRollResult = rollDice(4);
-				return totalRollResult;
+				return totalRollResult * -1;
 			}
 			if (i == "3" && this.movementRange <= 5)
 			{
 				float totalRollResult = rollDice(4);
 				this.hp += totalRollResult;
-				return totalRollResult;
+				return totalRollResult * -1;
 			}
 			if (i == "4" && this.movementRange <= 5)
 			{
 				float rollResult1 = rollDice(12);
 				float totalRollResult = rollResult1;
-				return totalRollResult;
+				return totalRollResult * -1;
 			}
 			if ((i == "2" && this.movementRange <= 5))
 				return 5;

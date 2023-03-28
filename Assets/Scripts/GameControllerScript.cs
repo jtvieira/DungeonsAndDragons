@@ -5,6 +5,7 @@ using Characters;
 using System.Collections;
 using System;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class GameControllerScript : MonoBehaviour
 {
@@ -94,7 +95,7 @@ public class GameControllerScript : MonoBehaviour
 				{
 					yield return StartCoroutine(executeAi(currentCharacter));
 				}
-
+				dijkstra.colorTiles(tiles.ToList(), "white");
 				currentCharacterRenderer.material.color = originalMaterial;
 			}
 

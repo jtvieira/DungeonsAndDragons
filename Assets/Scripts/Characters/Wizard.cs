@@ -8,7 +8,7 @@ namespace Characters
 	{
 		public void initialize(string id, GameObject wizardGameObj, Tilescript currentTile,float hp, int movementRange)
 		{
-			this.listOfSpells = "1: Magic Missle\n2: Scorching Ray\n3: Scorching Ray\n4: Ray of Frost ∞\n4: Fire Bolt ∞";
+			this.listOfSpells = "1: Magic Missle\n2: Scorching Ray\n3: Scorching Ray\n4: Ray of Frost ∞\n5: Fire Bolt ∞";
 			this.id = id;
 			this.characterObject = wizardGameObj;
 			this.currentTile = currentTile;

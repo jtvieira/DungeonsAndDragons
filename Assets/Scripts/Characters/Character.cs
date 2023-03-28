@@ -17,15 +17,56 @@ namespace Characters
 		protected int slot3;
 		protected int slot2;
 		protected int slot1;
+		protected float speed = 5f;
+		
 
-		public void move(Tilescript tileToMove)
-		{
+		// public void move(List<Tilescript> movePath)
+		// {
+		// 	this.currentTile.hasEntity = false;
+		// 	tileToMove.hasEntity = true;
+		// 	Vector3 newPosition = tileToMove.transform.position;
+		// 	newPosition.y += 1;
+		// 	this.characterObject.transform.position = newPosition;
+		// 	this.currentTile = tileToMove;
+		// }
+
+		public IEnumerator Move(List<Tilescript> movePath){
 			this.currentTile.hasEntity = false;
-			tileToMove.hasEntity = true;
-			Vector3 newPosition = tileToMove.transform.position;
-			newPosition.y += 1;
-			this.characterObject.transform.position = newPosition;
-			this.currentTile = tileToMove;
+			Tilescript tileToMove = null;
+			foreach (Tilescript tile in movePath)
+			{
+				tileToMove = tile;
+				if (tileToMove != null)
+				{
+					// Calculate the direction and distance to the next tile
+					Vector3 direction = (tile.transform.position - this.getCurrentTile().transform.position).normalized;
+					float distance = Vector3.Distance(tile.transform.position, this.getCurrentTile().transform.position);
+
+					// Move the character incrementally towards the next tile
+					while (distance > 0)
+					{
+						float step = Mathf.Min(speed * Time.deltaTime, distance);
+						this.characterObject.transform.position += direction * step;
+						distance -= step;
+						yield return null;
+					}
+
+					// Update the current tile of the character
+					this.currentTile = tileToMove;
+				}
+
+				
+			}
+
+			// Update the current tile of the character for the last tile in the path
+			if (tileToMove != null)
+			{
+				tileToMove.hasEntity = true;
+				Vector3 newPosition = tileToMove.transform.position;
+				newPosition.y += 1;
+				this.characterObject.transform.position = newPosition;
+				this.currentTile = tileToMove;
+			}
 		}
 
 		public GameObject getCharacterGameObj()

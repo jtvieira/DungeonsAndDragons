@@ -19,6 +19,7 @@ public class GameControllerScript : MonoBehaviour
 	private AiMoveOverlay aiMoveOverlay;
 	private AttackMoveOverlay attackOverlay;
 	private DijkstraController dijkstra;
+	// private CharacterMovement movement;
 
 	bool selectedCharacter = false;
 
@@ -181,8 +182,12 @@ public class GameControllerScript : MonoBehaviour
 		}
 
 		Tilescript tileToMove = dijkstra.getTileFromCoordinate(coordinate);
-		
-		currentCharacter.move(tileToMove);
+		Tilescript currentTile = currentCharacter.getCurrentTile();
+
+		List<Tilescript> movePath = dijkstra.computePath(tileToMove, currentTile);
+
+
+		yield return StartCoroutine(currentCharacter.Move(movePath));
 
 		dijkstra.colorTiles(tilesInRange, "white");
 	}
@@ -223,7 +228,8 @@ public class GameControllerScript : MonoBehaviour
 			}
 		}
 
-		currentCharacter.move(closestTile);
+		List<Tilescript> movePath = dijkstra.computePath(closestTile, currentCharacter.getCurrentTile());
+		yield return StartCoroutine(currentCharacter.Move(movePath));
 		// ==============================================
 		
 		string attack = "";

@@ -12,8 +12,10 @@ public class DijkstraController : MonoBehaviour
 
 	List<Tilescript> tilesQueue = new List<Tilescript>();
 
-	public void computePath(Tilescript start, Tilescript end)
+	public List<Tilescript> computePath(Tilescript start, Tilescript end)
 	{
+		List<Tilescript> temp = new List<Tilescript>();
+		tilesComputePath = GameObject.FindObjectsOfType<Tilescript>();
 		//clear all nodes from past computing
 		for (int i = 0; i < tilesComputePath.Length; i++)
 		{
@@ -88,8 +90,8 @@ public class DijkstraController : MonoBehaviour
 			temp[i].setColor(Color.green * 3);
 			path.Add(temp[i]);
 		}
+		return temp;
 	}
-	public List<Tilescript> temp = new List<Tilescript>();
 	public List<Tilescript> path = new List<Tilescript>();
 
 

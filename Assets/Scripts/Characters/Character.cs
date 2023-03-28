@@ -31,7 +31,6 @@ namespace Characters
 		// }
 
 		public IEnumerator Move(List<Tilescript> movePath){
-			print("Hello");
 			this.currentTile.hasEntity = false;
 			Tilescript tileToMove = null;
 			foreach (Tilescript tile in movePath)
@@ -41,7 +40,7 @@ namespace Characters
 				{
 					// Calculate the direction and distance to the next tile
 					Vector3 direction = (tile.transform.position - this.getCurrentTile().transform.position).normalized;
-					float distance = Vector3.Distance(tile.transform.position, this.characterObject.transform.position);
+					float distance = Vector3.Distance(tile.transform.position, this.getCurrentTile().transform.position);
 
 					// Move the character incrementally towards the next tile
 					while (distance > 0)

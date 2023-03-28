@@ -182,7 +182,7 @@ public class GameControllerScript : MonoBehaviour
 		Tilescript tileToMove = dijkstra.getTileFromCoordinate(coordinate);
 		Tilescript currentTile = currentCharacter.getCurrentTile();
 
-		List<Tilescript> movePath = dijkstra.computePath(currentTile, tileToMove);
+		List<Tilescript> movePath = dijkstra.computePath(tileToMove, currentTile);
 
 
 		yield return StartCoroutine(currentCharacter.Move(movePath));
@@ -226,7 +226,7 @@ public class GameControllerScript : MonoBehaviour
 			}
 		}
 
-		List<Tilescript> movePath = dijkstra.computePath(currentCharacter.getCurrentTile(), closestTile);
+		List<Tilescript> movePath = dijkstra.computePath(closestTile, currentCharacter.getCurrentTile());
 		yield return StartCoroutine(currentCharacter.Move(movePath));
 		// ==============================================
 		

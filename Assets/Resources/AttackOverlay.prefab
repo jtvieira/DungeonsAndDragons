@@ -1287,25 +1287,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 4001631837413476395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5732fa301bbfc46beaa0600c777eb18a, type: 3}
+  m_Script: {fileID: 11500000, guid: e4ec05afb4cb30e40ada7c1a8d46b380, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   panelRectTransform: {fileID: 0}
   AttackMoveResults: {fileID: 0}
   TileInputLabel: {fileID: 0}
-  AttackResultsLabel: {fileID: 1271166355038134420}
+  AttackResultsLabel: {fileID: 0}
   EnterAttackLabel: {fileID: 0}
   UserAttackResults: {fileID: 0}
-  SpellList: {fileID: 2228100642467796133}
+  SpellList: {fileID: 0}
   SpellsAvaliable: {fileID: 0}
   playerId: {fileID: 0}
   SpellsLabel: {fileID: 0}
   spellInput: {fileID: 0}
-  badSpell: {fileID: 368788216774509251}
+  badSpell: {fileID: 0}
   inputButton: {fileID: 0}
   closeOverlayButton: {fileID: 0}
   spellButton: {fileID: 0}
-  badMove: {fileID: 4758139909607611018}
+  badMove: {fileID: 0}
   tileInput: {fileID: 0}
 --- !u!1 &4098814760885372241
 GameObject:

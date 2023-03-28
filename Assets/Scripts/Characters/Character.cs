@@ -205,6 +205,7 @@ namespace Characters
 
 		public void die()
 		{
+			this.hp = 0;
 			this.currentTile.hasEntity = false;
 			Destroy(gameObject);
 		}

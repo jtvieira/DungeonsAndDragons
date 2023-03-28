@@ -104,9 +104,9 @@ public class GameControllerScript : MonoBehaviour
 			foreach (Character character in characters.Values)
 			{
 				string id = character.getId();
-				if ((id.StartsWith("wizard") || id.StartsWith("cleric")) && character.getHp() >= 0)
+				if ((id.StartsWith("wizard") || id.StartsWith("cleric")) && character.getHp() > 0)
 					goodCharactersAlive += 1;
-				else if ((id.StartsWith("skeleton") || id.StartsWith("war")) && character.getHp() >= 0)
+				else if ((id.StartsWith("skeleton") || id.StartsWith("war")) && character.getHp() > 0)
 					badCharactersAlive += 1;
 			}
 

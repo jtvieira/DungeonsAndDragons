@@ -152,15 +152,55 @@ namespace Characters
 			return this.currentTile;
 		}
 
-		public void takeDamage(float damage)
-		{
-			this.hp = this.hp - damage;
+public void takeDamage(float damage)
+{
+    this.hp -= damage;
 
-			if (this.hp <= 0)
-			{
-				die();
-			}
-		}
+    // Create a new particle system
+    ParticleSystem particleSystem = new GameObject("Particle System").AddComponent<ParticleSystem>();
+
+    // Set particle system properties
+    particleSystem.transform.position = this.characterObject.transform.position;
+    particleSystem.transform.rotation = this.characterObject.transform.rotation;
+    particleSystem.gameObject.layer = this.characterObject.layer;
+
+    // Set particle system main properties
+    var particleMain = particleSystem.main;
+    particleMain.startSize = 0.2f;
+    particleMain.startLifetime = 0.5f;
+    particleMain.startSpeed = 1f;
+    particleMain.startColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+
+    // Set particle system emission properties
+    var particleEmission = particleSystem.emission;
+    particleEmission.rateOverTime = 10f;
+
+    // Play the particle system
+    particleSystem.Play();
+
+    // Stop the particle system after 3 seconds
+    StartCoroutine(StopParticleSystem(particleSystem, 3f));
+
+    if (this.hp <= 0)
+    {
+        die();
+    }
+}
+
+private IEnumerator StopParticleSystem(ParticleSystem particleSystem, float delay)
+{
+    // Wait for the specified delay
+    yield return new WaitForSeconds(delay);
+
+    // Stop the particle system emitting new particles
+    particleSystem.Stop();
+
+    // Wait for the remaining particles to expire
+    yield return new WaitForSeconds(particleSystem.main.duration);
+
+    // Destroy the particle system object
+    Destroy(particleSystem.gameObject);
+}
 
 		public void die()
 		{

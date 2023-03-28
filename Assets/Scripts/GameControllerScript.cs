@@ -328,7 +328,7 @@ public class GameControllerScript : MonoBehaviour
 		//get valid tiles
 		List<Tilescript> tilesInRangeOfSpell = null;
 		tilesInRangeOfSpell = this.dijkstra.getTilesInRange(currentCharacter.getCurrentTile(), currentCharacter.getSpellRange(spellInput));
-
+	
 		bool isVal = false;
 
 		dijkstra.colorTiles(tilesInRangeOfSpell, "red");
